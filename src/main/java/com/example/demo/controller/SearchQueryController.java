@@ -12,7 +12,7 @@ public class SearchQueryController {
 
     private final SearchQueryService searchQueryService;
 
-    public SearchQueryRecordController(SearchQueryService searchQueryService) {
+    public SearchQueryController(SearchQueryService searchQueryService) {
         this.searchQueryService = searchQueryService;
     }
 
