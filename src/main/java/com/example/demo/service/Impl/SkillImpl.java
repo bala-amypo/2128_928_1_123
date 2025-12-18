@@ -29,7 +29,7 @@ public class SkillImpl implements SkillService {
     @Override
     public List<Skill> getAllSkills() {
         return skillRepo.findAll();
-    }
+    } 
 
     @Override
     public Skill updateSkill(Long id, Skill skill) {
