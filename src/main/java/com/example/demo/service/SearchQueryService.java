@@ -3,7 +3,7 @@ package com.example.demo.service;
 import com.example.demo.entity.SearchQueryRecord;
 import java.util.List;
 
-public interface SearchQueryRecordService {
+public interface SearchQueryService {
 
     SearchQueryRecord createQuery(SearchQueryRecord record);
 
