@@ -8,11 +8,11 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/api/search-queries")
-public class SearchQueryController {
+public class SearchQueryRecordController {
 
     private final SearchQueryService searchQueryService;
 
-    public SearchQueryController(SearchQueryService searchQueryService) {
+    public SearchQueryRecordController(SearchQueryService searchQueryService) {
         this.searchQueryService = searchQueryService;
     }
 
