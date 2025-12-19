@@ -1,7 +1,8 @@
 package com.example.demo.service.impl;
 
 import com.example.demo.entity.EmployeeSkill;
-import com.example.demo.repository.EmployeeSkillRepo;
+import com.example.demo.exception.ResourceNotFoundException;
+import com.example.demo.repository.EmployeeSkillRepository;
 import com.example.demo.service.EmployeeSkillService;
 import org.springframework.stereotype.Service;
 
@@ -10,38 +11,35 @@ import java.util.List;
 @Service
 public class EmployeeSkillImpl implements EmployeeSkillService {
 
-    private final EmployeeSkillRepo employeeSkillRepo;
+private final EmployeeSkillRepository employeeSkillRepository;
 
-    public EmployeeSkillImpl(EmployeeSkillRepo employeeSkillRepo) {
-        this.employeeSkillRepo = employeeSkillRepo;
-    }
+public EmployeeSkillImpl(EmployeeSkillRepository employeeSkillRepository) {
+this.employeeSkillRepository = employeeSkillRepository;
+}
 
-    @Override
-    public EmployeeSkill createEmployeeSkill(EmployeeSkill employeeSkill) {
-        return employeeSkillRepo.save(employeeSkill);
-    }
+@Override
+public EmployeeSkill createEmployeeSkill(EmployeeSkill employeeSkill) {
+return employeeSkillRepository.save(employeeSkill);
+}
 
-    @Override
-    public EmployeeSkill getEmployeeSkillById(Long id) {
-        EmployeeSkill empSkill = employeeSkillRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("EmployeeSkill not found with id: " + id));
-        employeeSkillRepository.delete(empSkill);
+@Override
+public EmployeeSkill getEmployeeSkillById(Long id) {
+return employeeSkillRepository.findById(id)
+.orElseThrow(() ->
+new ResourceNotFoundException("EmployeeSkill not found with id: " + id));
+}
 
-        
-    }
+@Override
+public List<EmployeeSkill> getAllEmployeeSkills() {
+return employeeSkillRepository.findAll();
+}
 
-    @Override
-    public List<EmployeeSkill> getAllEmployeeSkills() {
-        return employeeSkillRepo.findAll();
-    }
+@Override
+public void deleteEmployeeSkill(Long id) {
+EmployeeSkill employeeSkill = employeeSkillRepository.findById(id)
+.orElseThrow(() ->
+new ResourceNotFoundException("EmployeeSkill not found with id: " + id));
 
-    @Override
-    public EmployeeSkill updateEmployeeSkill(Long id, EmployeeSkill employeeSkill) {
-        employeeSkill.setId(id);
-        return employeeSkillRepo.save(employeeSkill);
-    }
-
-    @Override
-    public void deleteEmployeeSkill(Long id) {
-        employeeSkillRepo.deleteById(id);
-    }
+employeeSkillRepository.delete(employeeSkill);
+}
 }

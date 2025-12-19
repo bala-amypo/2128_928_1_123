@@ -1,7 +1,8 @@
 package com.example.demo.service.impl;
 
 import com.example.demo.entity.Skill;
-import com.example.demo.repository.SkillRepo;
+import com.example.demo.exception.ResourceNotFoundException;
+import com.example.demo.repository.SkillRepository;
 import com.example.demo.service.SkillService;
 import org.springframework.stereotype.Service;
 
@@ -10,38 +11,35 @@ import java.util.List;
 @Service
 public class SkillImpl implements SkillService {
 
-    private final SkillRepo skillRepo;
+private final SkillRepository skillRepository;
 
-    public SkillImpl(SkillRepo skillRepo) {
-        this.skillRepo = skillRepo;
-    }
+public SkillImpl(SkillRepository skillRepository) {
+this.skillRepository = skillRepository;
+}
 
-    @Override
-    public Skill createSkill(Skill skill) {
-        return skillRepo.save(skill);
-    }
+@Override
+public Skill createSkill(Skill skill) {
+return skillRepository.save(skill);
+}
 
-    @Override
-    public Skill getSkillById(Long id) {
-       Skill skill = skillRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("Skill not found with id: " + id));
-       skillRepository.delete(skill);
+@Override
+public Skill getSkillById(Long id) {
+return skillRepository.findById(id)
+.orElseThrow(() ->
+new ResourceNotFoundException("Skill not found with id: " + id));
+}
 
-        
-    }
+@Override
+public List<Skill> getAllSkills() {
+return skillRepository.findAll();
+}
 
-    @Override
-    public List<Skill> getAllSkills() {
-        return skillRepo.findAll();
-    } 
+@Override
+public void deleteSkill(Long id) {
+Skill skill = skillRepository.findById(id)
+.orElseThrow(() ->
+new ResourceNotFoundException("Skill not found with id: " + id));
 
-    @Override
-    public Skill updateSkill(Long id, Skill skill) {
-        skill.setId(id);
-        return skillRepo.save(skill);
-    }
-
-    @Override
-    public void deleteSkill(Long id) {
-        skillRepo.deleteById(id);
-    }
+skillRepository.delete(skill);
+}
 }
