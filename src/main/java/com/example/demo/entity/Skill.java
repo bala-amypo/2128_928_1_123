@@ -2,43 +2,32 @@ package com.example.demo.entity;
 
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
-import java.util.List;
+import jakarta.validation.constraints.NotNull;
 
 @Entity
-@Table(name = "skills")
 public class Skill {
 
-@Id
-@GeneratedValue(strategy = GenerationType.IDENTITY)
-private Long id;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
 
-@NotBlank(message = "Skill name is required")
-private String skillName;
+    @NotBlank(message = "Skill name required")
+    private String skillName;
 
-@ManyToOne
-@JoinColumn(name = "category_id")
-private SkillCategory category;
+    @ManyToOne
+    @NotNull(message = "Category required")
+    private SkillCategory category;
 
-@OneToMany(mappedBy = "skill", cascade = CascadeType.ALL)
-private List<EmployeeSkill> employeeSkills;
+    public Long getId() { return id; }
+    public void setId(Long id) { this.id = id; }
 
-public Skill() {}
+    public String getSkillName() { return skillName; }
+    public void setSkillName(String skillName) {
+        this.skillName = skillName;
+    }
 
-public Long getId() { return id; }
-public void setId(Long id) { this.id = id; }
-
-public String getSkillName() { return skillName; }
-public void setSkillName(String skillName) { this.skillName = skillName; }
-
-public SkillCategory getCategory() { return category; }
-public void setCategory(SkillCategory category) {
-this.category = category;
-}
-
-public List<EmployeeSkill> getEmployeeSkills() {
-return employeeSkills;
-}
-public void setEmployeeSkills(List<EmployeeSkill> employeeSkills) {
-this.employeeSkills = employeeSkills;
-}
+    public SkillCategory getCategory() { return category; }
+    public void setCategory(SkillCategory category) {
+        this.category = category;
+    }
 }
