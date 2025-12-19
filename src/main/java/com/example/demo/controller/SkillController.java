@@ -1,25 +1,46 @@
 package com.example.demo.controller;
 
-import com.example.demo.entity.Skill;
-import com.example.demo.service.impl.SkillImpl;
+import java.util.List;
+
 import jakarta.validation.Valid;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
+
+import com.example.demo.entity.Skill;
+import com.example.demo.service.SkillService;
 
 @RestController
 @RequestMapping("/skills")
 public class SkillController {
 
-@Autowired
-private SkillImpl service;
+    private final SkillService skillService;
 
-@PostMapping
-public Skill createSkill(@Valid @RequestBody Skill skill) {
-return service.create(skill);
-}
+    public SkillController(SkillService skillService) {
+        this.skillService = skillService;
+    }
 
-@GetMapping("/{id}")
-public Skill getSkill(@PathVariable Long id) {
-return service.getById(id);
-}
+    @PostMapping
+    public Skill create(@Valid @RequestBody Skill skill) {
+        return skillService.create(skill);
+    }
+
+    @GetMapping("/{id}")
+    public Skill getById(@PathVariable Long id) {
+        return skillService.getById(id);
+    }
+
+    @GetMapping
+    public List<Skill> getAll() {
+        return skillService.getAll();
+    }
+
+    @PutMapping("/{id}")
+    public Skill update(@PathVariable Long id,
+                        @Valid @RequestBody Skill skill) {
+        return skillService.update(id, skill);
+    }
+
+    @DeleteMapping("/{id}")
+    public void delete(@PathVariable Long id) {
+        skillService.delete(id);
+    }
 }

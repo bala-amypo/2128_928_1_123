@@ -1,30 +1,46 @@
 package com.example.demo.controller;
 
-import com.example.demo.entity.Employee;
-import com.example.demo.service.impl.EmployeeImpl;
+import java.util.List;
+
 import jakarta.validation.Valid;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
+
+import com.example.demo.entity.Employee;
+import com.example.demo.service.EmployeeService;
 
 @RestController
 @RequestMapping("/employees")
 public class EmployeeController {
 
-@Autowired
-private EmployeeImpl service;
+    private final EmployeeService employeeService;
 
-@PostMapping
-public Employee createEmployee(@Valid @RequestBody Employee employee) {
-return service.create(employee);
-}
+    public EmployeeController(EmployeeService employeeService) {
+        this.employeeService = employeeService;
+    }
 
-@GetMapping("/{id}")
-public Employee getEmployee(@PathVariable Long id) {
-return service.getById(id);
-}
+    @PostMapping
+    public Employee create(@Valid @RequestBody Employee employee) {
+        return employeeService.create(employee);
+    }
 
-@DeleteMapping("/{id}")
-public void deleteEmployee(@PathVariable Long id) {
-service.delete(id);
-}
+    @GetMapping("/{id}")
+    public Employee getById(@PathVariable Long id) {
+        return employeeService.getById(id);
+    }
+
+    @GetMapping
+    public List<Employee> getAll() {
+        return employeeService.getAll();
+    }
+
+    @PutMapping("/{id}")
+    public Employee update(@PathVariable Long id,
+                           @Valid @RequestBody Employee employee) {
+        return employeeService.update(id, employee);
+    }
+
+    @DeleteMapping("/{id}")
+    public void delete(@PathVariable Long id) {
+        employeeService.delete(id);
+    }
 }
