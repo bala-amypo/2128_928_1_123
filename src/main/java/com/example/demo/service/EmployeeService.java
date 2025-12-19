@@ -1,17 +1,17 @@
 package com.example.demo.service;
 
-import com.example.demo.entity.Employee;
 import java.util.List;
+import com.example.demo.entity.Employee;
 
 public interface EmployeeService {
 
-    Employee createEmployee(Employee employee);
+    Employee create(Employee employee);
 
-    Employee getEmployeeById(Long id);
+    Employee getById(Long id);
 
-    List<Employee> getAllEmployees();
+    List<Employee> getAll();
 
-    Employee updateEmployee(Long id, Employee employee);
+    Employee update(Long id, Employee employee);
 
-    void deleteEmployee(Long id);
+    void delete(Long id);
 }

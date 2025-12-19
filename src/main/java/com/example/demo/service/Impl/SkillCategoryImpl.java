@@ -1,45 +1,50 @@
 package com.example.demo.service.impl;
 
+import java.util.List;
+
+import org.springframework.stereotype.Service;
+
 import com.example.demo.entity.SkillCategory;
 import com.example.demo.exception.ResourceNotFoundException;
 import com.example.demo.repository.SkillCategoryRepo;
 import com.example.demo.service.SkillCategoryService;
-import org.springframework.stereotype.Service;
-
-import java.util.List;
 
 @Service
 public class SkillCategoryImpl implements SkillCategoryService {
 
-private final SkillCategoryRepository skillCategoryRepository;
+    private final SkillCategoryRepo categoryRepo;
 
-public SkillCategoryImpl(SkillCategoryRepository skillCategoryRepository) {
-this.skillCategoryRepository = skillCategoryRepository;
-}
+    public SkillCategoryImpl(SkillCategoryRepo categoryRepo) {
+        this.categoryRepo = categoryRepo;
+    }
 
-@Override
-public SkillCategory createCategory(SkillCategory category) {
-return skillCategoryRepository.save(category);
-}
+    @Override
+    public SkillCategory create(SkillCategory category) {
+        return categoryRepo.save(category);
+    }
 
-@Override
-public SkillCategory getCategoryById(Long id) {
-return skillCategoryRepository.findById(id)
-.orElseThrow(() ->
-new ResourceNotFoundException("SkillCategory not found with id: " + id));
-}
+    @Override
+    public SkillCategory getById(Long id) {
+        return categoryRepo.findById(id)
+                .orElseThrow(() ->
+                        new ResourceNotFoundException(
+                                "Skill category not found with id: " + id));
+    }
 
-@Override
-public List<SkillCategory> getAllCategories() {
-return skillCategoryRepository.findAll();
-}
+    @Override
+    public List<SkillCategory> getAll() {
+        return categoryRepo.findAll();
+    }
 
-@Override
-public void deleteCategory(Long id) {
-SkillCategory category = skillCategoryRepository.findById(id)
-.orElseThrow(() ->
-new ResourceNotFoundException("SkillCategory not found with id: " + id));
+    @Override
+    public SkillCategory update(Long id, SkillCategory category) {
+        SkillCategory existing = getById(id);
+        existing.setCategoryName(category.getCategoryName());
+        return categoryRepo.save(existing);
+    }
 
-skillCategoryRepository.delete(category);
-}
+    @Override
+    public void delete(Long id) {
+        categoryRepo.delete(getById(id));
+    }
 }

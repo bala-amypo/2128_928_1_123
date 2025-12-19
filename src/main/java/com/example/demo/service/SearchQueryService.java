@@ -1,15 +1,15 @@
 package com.example.demo.service;
 
-import com.example.demo.entity.SearchQueryRecord;
 import java.util.List;
+import com.example.demo.entity.SearchQueryRecord;
 
 public interface SearchQueryService {
 
-    SearchQueryRecord createQuery(SearchQueryRecord record);
+    SearchQueryRecord create(SearchQueryRecord record);
 
-    SearchQueryRecord getQueryById(Long id);
+    SearchQueryRecord getById(Long id);
 
-    List<SearchQueryRecord> getAllQueries();
+    List<SearchQueryRecord> getAll();
 
-    void deleteQuery(Long id);
+    void delete(Long id);
 }

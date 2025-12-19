@@ -1,17 +1,17 @@
 package com.example.demo.service;
 
-import com.example.demo.entity.EmployeeSkill;
 import java.util.List;
+import com.example.demo.entity.EmployeeSkill;
 
 public interface EmployeeSkillService {
 
-    EmployeeSkill createEmployeeSkill(EmployeeSkill employeeSkill);
+    EmployeeSkill create(EmployeeSkill employeeSkill);
 
-    EmployeeSkill getEmployeeSkillById(Long id);
+    EmployeeSkill getById(Long id);
 
-    List<EmployeeSkill> getAllEmployeeSkills();
+    List<EmployeeSkill> getAll();
 
-    EmployeeSkill updateEmployeeSkill(Long id, EmployeeSkill employeeSkill);
+    EmployeeSkill update(Long id, EmployeeSkill employeeSkill);
 
-    void deleteEmployeeSkill(Long id);
+    void delete(Long id);
 }
