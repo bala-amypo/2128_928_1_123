@@ -2,7 +2,7 @@ package com.example.demo.service.impl;
 
 import com.example.demo.entity.Skill;
 import com.example.demo.exception.ResourceNotFoundException;
-import com.example.demo.repository.SkillRepository;
+import com.example.demo.repository.SkillRepo;
 import com.example.demo.service.SkillService;
 import org.springframework.stereotype.Service;
 
