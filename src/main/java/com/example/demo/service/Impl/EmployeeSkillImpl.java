@@ -23,7 +23,9 @@ public class EmployeeSkillImpl implements EmployeeSkillService {
 
     @Override
     public EmployeeSkill getEmployeeSkillById(Long id) {
-        return employeeSkillRepo.findById(id).orElseThrow(() -> new ResourceNotFoundException("Employee not found with id: " + id));
+        EmployeeSkill empSkill = employeeSkillRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("EmployeeSkill not found with id: " + id));
+        employeeSkillRepository.delete(empSkill);
+
         
     }
 
