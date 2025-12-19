@@ -23,7 +23,8 @@ public class SkillCategoryImpl implements SkillCategoryService {
 
     @Override
     public SkillCategory getCategoryById(Long id) {
-        return skillCategoryRepo.findById(id).orElse(null);
+        return skillCategoryRepo.findById(id).orElseThrow(() -> new ResourceNotFoundException("Employee not found with id: " + id));
+        
     }
 
     @Override

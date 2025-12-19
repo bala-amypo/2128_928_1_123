@@ -23,7 +23,8 @@ public class SearchQueryRecordImpl implements SearchQueryService {
 
     @Override
     public SearchQueryRecord getQueryById(Long id) {
-        return searchQueryRecordRepo.findById(id).orElse(null);
+        return searchQueryRecordRepo.findById(id).orElseThrow(() -> new ResourceNotFoundException("Employee not found with id: " + id));
+        
     }
 
     @Override
