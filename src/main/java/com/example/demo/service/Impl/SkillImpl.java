@@ -23,7 +23,8 @@ public class SkillImpl implements SkillService {
 
     @Override
     public Skill getSkillById(Long id) {
-        return skillRepo.findById(id).orElse(null);
+        return skillRepo.findById(id).orElseThrow(() -> new ResourceNotFoundException("Employee not found with id: " + id));
+        
     }
 
     @Override
