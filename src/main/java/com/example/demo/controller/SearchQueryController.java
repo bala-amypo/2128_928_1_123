@@ -1,38 +1,30 @@
 package com.example.demo.controller;
 
 import com.example.demo.entity.SearchQueryRecord;
-import com.example.demo.service.SearchQueryService;
+import com.example.demo.service.impl.SearchQueryRecordImpl;
+import jakarta.validation.Valid;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.List;
-
 @RestController
-@RequestMapping("/api/search-queries")
+@RequestMapping("/search-queries")
 public class SearchQueryController {
 
-    private final SearchQueryService searchQueryService;
+@Autowired
+private SearchQueryRecordImpl service;
 
-    public SearchQueryController(SearchQueryService searchQueryService) {
-        this.searchQueryService = searchQueryService;
-    }
+@PostMapping
+public SearchQueryRecord createQuery(@Valid @RequestBody SearchQueryRecord record) {
+return service.create(record);
+}
 
-    @PostMapping
-    public SearchQueryRecord createQuery(@RequestBody SearchQueryRecord record) {
-        return searchQueryService.createQuery(record);
-    }
+@GetMapping("/{id}")
+public SearchQueryRecord getQuery(@PathVariable Long id) {
+return service.getById(id);
+}
 
-    @GetMapping("/{id}")
-    public SearchQueryRecord getQuery(@PathVariable Long id) {
-        return searchQueryService.getQueryById(id);
-    }
-
-    @GetMapping
-    public List<SearchQueryRecord> getAllQueries() {
-        return searchQueryService.getAllQueries();
-    }
-
-    @DeleteMapping("/{id}")
-    public void deleteQuery(@PathVariable Long id) {
-        searchQueryService.deleteQuery(id);
-    }
+@DeleteMapping("/{id}")
+public void deleteQuery(@PathVariable Long id) {
+service.delete(id);
+}
 }
