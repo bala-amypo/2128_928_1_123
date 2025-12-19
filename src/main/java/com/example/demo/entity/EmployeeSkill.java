@@ -4,24 +4,43 @@ import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
 
 @Entity
+@Table(name = "employee_skills")
 public class EmployeeSkill {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+@Id
+@GeneratedValue(strategy = GenerationType.IDENTITY)
+private Long id;
 
-    @NotNull(message = "Employee ID is required")
-    private Long employeeId;
+@ManyToOne
+@JoinColumn(name = "employee_id")
+@NotNull
+private Employee employee;
 
-    @NotNull(message = "Skill ID is required")
-    private Long skillId;
+@ManyToOne
+@JoinColumn(name = "skill_id")
+@NotNull
+private Skill skill;
 
-    public Long getId() { return id; }
-    public void setId(Long id) { this.id = id; }
+@NotNull(message = "Proficiency level is required")
+private Integer proficiencyLevel;
 
-    public Long getEmployeeId() { return employeeId; }
-    public void setEmployeeId(Long employeeId) { this.employeeId = employeeId; }
+public EmployeeSkill() {}
 
-    public Long getSkillId() { return skillId; }
-    public void setSkillId(Long skillId) { this.skillId = skillId; }
+public Long getId() { return id; }
+public void setId(Long id) { this.id = id; }
+
+public Employee getEmployee() { return employee; }
+public void setEmployee(Employee employee) {
+this.employee = employee;
+}
+
+public Skill getSkill() { return skill; }
+public void setSkill(Skill skill) { this.skill = skill; }
+
+public Integer getProficiencyLevel() {
+return proficiencyLevel;
+}
+public void setProficiencyLevel(Integer proficiencyLevel) {
+this.proficiencyLevel = proficiencyLevel;
+}
 }
