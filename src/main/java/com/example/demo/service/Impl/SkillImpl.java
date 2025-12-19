@@ -22,8 +22,9 @@ public class SkillImpl implements SkillService {
     }
 
     @Override
-    public Skill getSkillById(Long id) {
-        return skillRepo.findById(id).orElseThrow(() -> new ResourceNotFoundException("Employee not found with id: " + id));
+    Skill skill = skillRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("Skill not found with id: " + id));
+    skillRepository.delete(skill);
+
         
     }
 
