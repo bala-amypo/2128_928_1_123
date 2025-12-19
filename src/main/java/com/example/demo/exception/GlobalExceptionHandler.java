@@ -1,4 +1,4 @@
-package com.example.handling.exception;
+package com.example.demo.exception;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -12,30 +12,23 @@ import org.springframework.web.bind.annotation.RestControllerAdvice;
 @RestControllerAdvice
 public class GlobalExceptionHandler {
 
-@ExceptionHandler(ResourceNotFoundException.class)
-public ResponseEntity<String> handleNotFound(ResourceNotFoundException ex) {
-return new ResponseEntity<>(ex.getMessage(), HttpStatus.NOT_FOUND);
-}
+    @ExceptionHandler(ResourceNotFoundException.class)
+    public ResponseEntity<String> handleResourceNotFound(
+            ResourceNotFoundException ex) {
 
-@ExceptionHandler(MethodArgumentNotValidException.class)
-public ResponseEntity<Map<String, String>> handleValidationErrors(
-MethodArgumentNotValidException ex) {
+        return new ResponseEntity<>(ex.getMessage(), HttpStatus.NOT_FOUND);
+    }
 
-Map<String, String> errors = new HashMap<>();
+    @ExceptionHandler(MethodArgumentNotValidException.class)
+    public ResponseEntity<Map<String, String>> handleValidationErrors(
+            MethodArgumentNotValidException ex) {
 
-ex.getBindingResult().getFieldErrors().forEach(error ->
-errors.put(error.getField(), error.getDefaultMessage())
-);
+        Map<String, String> errors = new HashMap<>();
+        ex.getBindingResult().getFieldErrors()
+                .forEach(error ->
+                        errors.put(error.getField(),
+                                   error.getDefaultMessage()));
 
-return new ResponseEntity<>(errors, HttpStatus.BAD_REQUEST);
-}
-
-/* OPTIONAL BUT STRONGLY RECOMMENDED */
-@ExceptionHandler(Exception.class)
-public ResponseEntity<String> handleGenericException(Exception ex) {
-return new ResponseEntity<>(
-"Internal Server Error. Please contact support.",
-HttpStatus.INTERNAL_SERVER_ERROR
-);
-}
+        return new ResponseEntity<>(errors, HttpStatus.BAD_REQUEST);
+    }
 }
