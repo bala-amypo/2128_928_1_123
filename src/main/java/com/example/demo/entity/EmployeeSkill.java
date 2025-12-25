@@ -1,25 +1,28 @@
-package com.example.demo.entity;
+package com.example.demo.model;
 
 import jakarta.persistence.*;
-import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.NotNull;
 
 @Entity
+@Table(name = "employee_skills")
 public class EmployeeSkill {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @ManyToOne @NotNull
+    @ManyToOne(optional = false)
     private Employee employee;
 
-    @ManyToOne @NotNull
+    @ManyToOne(optional = false)
     private Skill skill;
 
-    @NotBlank(message = "Proficiency level required")
     private String proficiencyLevel;
+    private Integer yearsOfExperience;
+    private Boolean active = true;
 
+    public EmployeeSkill() {}
+
+    // Getters & Setters
     public Long getId() { return id; }
     public void setId(Long id) { this.id = id; }
 
@@ -30,7 +33,11 @@ public class EmployeeSkill {
     public void setSkill(Skill skill) { this.skill = skill; }
 
     public String getProficiencyLevel() { return proficiencyLevel; }
-    public void setProficiencyLevel(String proficiencyLevel) {
-        this.proficiencyLevel = proficiencyLevel;
-    }
+    public void setProficiencyLevel(String proficiencyLevel) { this.proficiencyLevel = proficiencyLevel; }
+
+    public Integer getYearsOfExperience() { return yearsOfExperience; }
+    public void setYearsOfExperience(Integer yearsOfExperience) { this.yearsOfExperience = yearsOfExperience; }
+
+    public Boolean getActive() { return active; }
+    public void setActive(Boolean active) { this.active = active; }
 }
