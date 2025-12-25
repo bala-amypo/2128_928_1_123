@@ -8,31 +8,30 @@ import io.swagger.v3.oas.models.security.SecurityScheme;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
+import java.util.List;
+
 @Configuration
 public class SwaggerConfig {
 
     @Bean
     public OpenAPI openAPI() {
-
-        final String securitySchemeName = "BearerAuth";
-
         return new OpenAPI()
             .info(new Info()
                 .title("Employee Skills Matrix Search API")
                 .version("1.0")
                 .description("REST APIs for managing employees, skills, and skill-based search"))
-            .addServersItem(new Server()
-                .url("http://9142.408procr.amypo.ai")
-                .description("Deployed Server"))
-            .addSecurityItem(new SecurityRequirement()
-                .addList(securitySchemeName))
+            .servers(List.of(
+                new Server().url("http://9142.408procr.amypo.ai")
+            ))
+            .addSecurityItem(new SecurityRequirement().addList("bearerAuth"))
             .components(new io.swagger.v3.oas.models.Components()
-                .addSecuritySchemes(securitySchemeName,
+                .addSecuritySchemes("bearerAuth",
                     new SecurityScheme()
-                        .name(securitySchemeName)
+                        .name("bearerAuth")
                         .type(SecurityScheme.Type.HTTP)
                         .scheme("bearer")
                         .bearerFormat("JWT")
-                ));
+                )
+            );
     }
 }
