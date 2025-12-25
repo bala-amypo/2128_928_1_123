@@ -1,81 +1,70 @@
 package com.example.demo.config;
 
 import com.example.demo.security.JwtAuthenticationFilter;
+import com.example.demo.security.CustomUserDetailsService;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.AuthenticationProvider;
+import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
 import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.http.SessionCreationPolicy;
-import org.springframework.security.web.SecurityFilterChain;
-import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
-import org.springframework.web.cors.CorsConfiguration;
-import org.springframework.web.cors.CorsConfigurationSource;
-import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
-
-
-import java.util.List;
+import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
 @Configuration
 public class SecurityConfig {
 
-    private final JwtAuthenticationFilter jwtFilter;
+private final JwtAuthenticationFilter jwtFilter;
+private final CustomUserDetailsService userDetailsService;
 
-    public SecurityConfig(JwtAuthenticationFilter jwtFilter) {
-        this.jwtFilter = jwtFilter;
-    }
+public SecurityConfig(JwtAuthenticationFilter jwtFilter,
+CustomUserDetailsService userDetailsService) {
+this.jwtFilter = jwtFilter;
+this.userDetailsService = userDetailsService;
+}
 
-    // 🔑 THIS IS WHERE http.cors() GOES
-    @Bean
-    public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
+@Bean
+public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
+http
+.csrf(csrf -> csrf.disable())
+.cors(cors -> {})
+.sessionManagement(session ->
+session.sessionCreationPolicy(SessionCreationPolicy.STATELESS)
+)
+.authorizeHttpRequests(auth -> auth
+.requestMatchers(
+"/auth/**",
+"/v3/api-docs/**",
+"/swagger-ui/**",
+"/swagger-ui.html"
+).permitAll()
+.anyRequest().authenticated()
+)
+.authenticationProvider(authenticationProvider())
+.addFilterBefore(jwtFilter, UsernamePasswordAuthenticationFilter.class);
 
-        http
-            .cors()                 // ✅ EXACT LINE (HERE)
-            .and()
-            .csrf(csrf -> csrf.disable())
-            .sessionManagement(session ->
-                session.sessionCreationPolicy(SessionCreationPolicy.STATELESS)
-            )
-            .authorizeHttpRequests(auth -> auth
-                .requestMatchers(
-                    "/auth/**",
-                    "/v3/api-docs/**",
-                    "/swagger-ui/**",
-                    "/swagger-ui.html"
-                ).permitAll()
-                .anyRequest().authenticated()
-            )
-            .addFilterBefore(jwtFilter, UsernamePasswordAuthenticationFilter.class);
+return http.build();
+}
 
-        return http.build();
-    }
+@Bean
+public AuthenticationProvider authenticationProvider() {
+DaoAuthenticationProvider provider = new DaoAuthenticationProvider();
+provider.setUserDetailsService(userDetailsService);
+provider.setPasswordEncoder(passwordEncoder());
+return provider;
+}
 
-    // 🔑 REQUIRED FOR CORS TO WORK
-    @Bean
-    public CorsConfigurationSource corsConfigurationSource() {
-        CorsConfiguration config = new CorsConfiguration();
-        config.setAllowedOrigins(List.of("*"));
-        config.setAllowedMethods(List.of("GET", "POST", "PUT", "DELETE", "OPTIONS"));
-        config.setAllowedHeaders(List.of("*"));
-        config.setAllowCredentials(false);
+@Bean
+public AuthenticationManager authenticationManager(AuthenticationConfiguration config) throws Exception {
+return config.getAuthenticationManager();
+}
 
-        UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
-        source.registerCorsConfiguration("/**", config);
-        return source;
-    }
-
-    // 🔑 AUTH MANAGER
-    @Bean
-    public AuthenticationManager authenticationManager(
-            AuthenticationConfiguration configuration) throws Exception {
-        return configuration.getAuthenticationManager();
-    }
-
-    @Bean
-    public PasswordEncoder passwordEncoder() {
-        return new BCryptPasswordEncoder();
-    }
- 
+@Bean
+public PasswordEncoder passwordEncoder() {
+return new BCryptPasswordEncoder();
+}
 }
