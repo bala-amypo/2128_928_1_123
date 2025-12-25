@@ -1,46 +1,45 @@
 package com.example.demo.controller;
 
-import java.util.List;
-
+import com.example.demo.model.Skill;
+import com.example.demo.service.SkillService;
 import jakarta.validation.Valid;
 import org.springframework.web.bind.annotation.*;
 
-import com.example.demo.entity.Skill;
-import com.example.demo.service.SkillService;
+import java.util.List;
 
 @RestController
-@RequestMapping("/skills")
+@RequestMapping("/api/skills")
 public class SkillController {
 
-    private final SkillService skillService;
+    private final SkillService service;
 
-    public SkillController(SkillService skillService) {
-        this.skillService = skillService;
+    public SkillController(SkillService service) {
+        this.service = service;
     }
 
     @PostMapping
     public Skill create(@Valid @RequestBody Skill skill) {
-        return skillService.create(skill);
-    }
-
-    @GetMapping("/{id}")
-    public Skill getById(@PathVariable Long id) {
-        return skillService.getById(id);
-    }
-
-    @GetMapping
-    public List<Skill> getAll() {
-        return skillService.getAll();
+        return service.createSkill(skill);
     }
 
     @PutMapping("/{id}")
     public Skill update(@PathVariable Long id,
                         @Valid @RequestBody Skill skill) {
-        return skillService.update(id, skill);
+        return service.updateSkill(id, skill);
+    }
+
+    @GetMapping("/{id}")
+    public Skill getById(@PathVariable Long id) {
+        return service.getSkillById(id);
+    }
+
+    @GetMapping
+    public List<Skill> getAll() {
+        return service.getAllSkills();
     }
 
     @DeleteMapping("/{id}")
-    public void delete(@PathVariable Long id) {
-        skillService.delete(id);
+    public void deactivate(@PathVariable Long id) {
+        service.deactivateSkill(id);
     }
 }

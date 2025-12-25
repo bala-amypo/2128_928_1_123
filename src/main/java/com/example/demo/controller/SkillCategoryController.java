@@ -1,46 +1,45 @@
 package com.example.demo.controller;
 
-import java.util.List;
-
+import com.example.demo.model.SkillCategory;
+import com.example.demo.service.SkillCategoryService;
 import jakarta.validation.Valid;
 import org.springframework.web.bind.annotation.*;
 
-import com.example.demo.entity.SkillCategory;
-import com.example.demo.service.SkillCategoryService;
+import java.util.List;
 
 @RestController
-@RequestMapping("/skill-categories")
+@RequestMapping("/api/categories")
 public class SkillCategoryController {
 
-    private final SkillCategoryService categoryService;
+    private final SkillCategoryService service;
 
-    public SkillCategoryController(SkillCategoryService categoryService) {
-        this.categoryService = categoryService;
+    public SkillCategoryController(SkillCategoryService service) {
+        this.service = service;
     }
 
     @PostMapping
     public SkillCategory create(@Valid @RequestBody SkillCategory category) {
-        return categoryService.create(category);
-    }
-
-    @GetMapping("/{id}")
-    public SkillCategory getById(@PathVariable Long id) {
-        return categoryService.getById(id);
-    }
-
-    @GetMapping
-    public List<SkillCategory> getAll() {
-        return categoryService.getAll();
+        return service.createCategory(category);
     }
 
     @PutMapping("/{id}")
     public SkillCategory update(@PathVariable Long id,
                                 @Valid @RequestBody SkillCategory category) {
-        return categoryService.update(id, category);
+        return service.updateCategory(id, category);
+    }
+
+    @GetMapping("/{id}")
+    public SkillCategory getById(@PathVariable Long id) {
+        return service.getCategoryById(id);
+    }
+
+    @GetMapping
+    public List<SkillCategory> getAll() {
+        return service.getAllCategories();
     }
 
     @DeleteMapping("/{id}")
-    public void delete(@PathVariable Long id) {
-        categoryService.delete(id);
+    public void deactivate(@PathVariable Long id) {
+        service.deactivateCategory(id);
     }
 }

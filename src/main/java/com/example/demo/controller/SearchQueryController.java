@@ -1,40 +1,34 @@
 package com.example.demo.controller;
 
-import java.util.List;
-
-import jakarta.validation.Valid;
+import com.example.demo.model.SearchQueryRecord;
+import com.example.demo.service.SearchQueryService;
 import org.springframework.web.bind.annotation.*;
 
-import com.example.demo.entity.SearchQueryRecord;
-import com.example.demo.service.SearchQueryService;
+import java.util.List;
 
 @RestController
-@RequestMapping("/search-queries")
+@RequestMapping("/api/search")
 public class SearchQueryController {
 
-    private final SearchQueryService searchQueryService;
+    private final SearchQueryService service;
 
-    public SearchQueryController(SearchQueryService searchQueryService) {
-        this.searchQueryService = searchQueryService;
+    public SearchQueryController(SearchQueryService service) {
+        this.service = service;
     }
 
     @PostMapping
-    public SearchQueryRecord create(@Valid @RequestBody SearchQueryRecord record) {
-        return searchQueryService.create(record);
+    public List<?> search(@RequestBody List<String> skills,
+                          @RequestParam Long userId) {
+        return service.searchEmployeesBySkills(skills, userId);
     }
 
     @GetMapping("/{id}")
     public SearchQueryRecord getById(@PathVariable Long id) {
-        return searchQueryService.getById(id);
+        return service.getQueryById(id);
     }
 
-    @GetMapping
-    public List<SearchQueryRecord> getAll() {
-        return searchQueryService.getAll();
-    }
-
-    @DeleteMapping("/{id}")
-    public void delete(@PathVariable Long id) {
-        searchQueryService.delete(id);
+    @GetMapping("/history/{userId}")
+    public List<SearchQueryRecord> history(@PathVariable Long userId) {
+        return service.getQueriesForUser(userId);
     }
 }

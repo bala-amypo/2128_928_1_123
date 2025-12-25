@@ -1,46 +1,45 @@
 package com.example.demo.controller;
 
-import java.util.List;
-
+import com.example.demo.model.EmployeeSkill;
+import com.example.demo.service.EmployeeSkillService;
 import jakarta.validation.Valid;
 import org.springframework.web.bind.annotation.*;
 
-import com.example.demo.entity.EmployeeSkill;
-import com.example.demo.service.EmployeeSkillService;
+import java.util.List;
 
 @RestController
-@RequestMapping("/employee-skills")
+@RequestMapping("/api/employee-skills")
 public class EmployeeSkillController {
 
-    private final EmployeeSkillService employeeSkillService;
+    private final EmployeeSkillService service;
 
-    public EmployeeSkillController(EmployeeSkillService employeeSkillService) {
-        this.employeeSkillService = employeeSkillService;
+    public EmployeeSkillController(EmployeeSkillService service) {
+        this.service = service;
     }
 
     @PostMapping
     public EmployeeSkill create(@Valid @RequestBody EmployeeSkill employeeSkill) {
-        return employeeSkillService.create(employeeSkill);
-    }
-
-    @GetMapping("/{id}")
-    public EmployeeSkill getById(@PathVariable Long id) {
-        return employeeSkillService.getById(id);
-    }
-
-    @GetMapping
-    public List<EmployeeSkill> getAll() {
-        return employeeSkillService.getAll();
+        return service.createEmployeeSkill(employeeSkill);
     }
 
     @PutMapping("/{id}")
     public EmployeeSkill update(@PathVariable Long id,
                                 @Valid @RequestBody EmployeeSkill employeeSkill) {
-        return employeeSkillService.update(id, employeeSkill);
+        return service.updateEmployeeSkill(id, employeeSkill);
+    }
+
+    @GetMapping("/employee/{employeeId}")
+    public List<EmployeeSkill> getByEmployee(@PathVariable Long employeeId) {
+        return service.getSkillsForEmployee(employeeId);
+    }
+
+    @GetMapping("/skill/{skillId}")
+    public List<EmployeeSkill> getBySkill(@PathVariable Long skillId) {
+        return service.getEmployeesBySkill(skillId);
     }
 
     @DeleteMapping("/{id}")
-    public void delete(@PathVariable Long id) {
-        employeeSkillService.delete(id);
+    public void deactivate(@PathVariable Long id) {
+        service.deactivateEmployeeSkill(id);
     }
 }
