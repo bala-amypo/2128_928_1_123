@@ -1,17 +1,18 @@
 package com.example.demo.service;
 
+import com.example.demo.model.SkillCategory;
+
 import java.util.List;
-import com.example.demo.entity.SkillCategory;
 
 public interface SkillCategoryService {
 
-    SkillCategory create(SkillCategory category);
+    SkillCategory createCategory(SkillCategory category);
 
-    SkillCategory getById(Long id);
+    SkillCategory updateCategory(Long id, SkillCategory category);
 
-    List<SkillCategory> getAll();
+    SkillCategory getCategoryById(Long id);
 
-    SkillCategory update(Long id, SkillCategory category);
+    List<SkillCategory> getAllCategories();
 
-    void delete(Long id);
+    void deactivateCategory(Long id);
 }
