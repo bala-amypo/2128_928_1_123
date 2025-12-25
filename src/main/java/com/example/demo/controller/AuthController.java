@@ -3,9 +3,10 @@ package com.example.demo.controller;
 import com.example.demo.entity.User;
 import com.example.demo.repository.UserRepository;
 import com.example.demo.security.JwtUtil;
-import org.springframework.http.ResponseEntity;
+import com.example.demo.security.CustomUserDetailsService;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 
@@ -13,39 +14,47 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping("/auth")
 public class AuthController {
 
-    private final AuthenticationManager authenticationManager;
-    private final UserRepository userRepository;
-    private final JwtUtil jwtUtil;
-    private final PasswordEncoder passwordEncoder;
+private final AuthenticationManager authenticationManager;
+private final UserRepository userRepository;
+private final PasswordEncoder passwordEncoder;
+private final JwtUtil jwtUtil;
+private final CustomUserDetailsService userDetailsService;
 
-    public AuthController(AuthenticationManager authenticationManager,
-                          UserRepository userRepository,
-                          JwtUtil jwtUtil,
-                          PasswordEncoder passwordEncoder) {
-        this.authenticationManager = authenticationManager;
-        this.userRepository = userRepository;
-        this.jwtUtil = jwtUtil;
-        this.passwordEncoder = passwordEncoder;
-    }
+public AuthController(AuthenticationManager authenticationManager,
+UserRepository userRepository,
+PasswordEncoder passwordEncoder,
+JwtUtil jwtUtil,
+CustomUserDetailsService userDetailsService) {
 
-    @PostMapping("/register")
-    public ResponseEntity<String> register(@RequestBody User user) {
-        user.setPassword(passwordEncoder.encode(user.getPassword()));
-        userRepository.save(user);
-        return ResponseEntity.ok("User registered successfully");
-    }
+this.authenticationManager = authenticationManager;
+this.userRepository = userRepository;
+this.passwordEncoder = passwordEncoder;
+this.jwtUtil = jwtUtil;
+this.userDetailsService = userDetailsService;
+}
 
-    @PostMapping("/login")
-    public ResponseEntity<String> login(@RequestBody User user) {
+@PostMapping("/register")
+public String register(@RequestBody User user) {
+user.setPassword(passwordEncoder.encode(user.getPassword()));
+userRepository.save(user);
+return "User registered successfully";
+}
 
-        authenticationManager.authenticate(
-                new UsernamePasswordAuthenticationToken(
-                        user.getUsername(),
-                        user.getPassword()
-                )
-        );
+@PostMapping("/login")
+public String login(@RequestBody User user) {
 
-        String token = jwtUtil.generateToken(user.getUsername());
-        return ResponseEntity.ok(token);
-    }
+authenticationManager.authenticate(
+new UsernamePasswordAuthenticationToken(
+user.getUsername(),
+user.getPassword()
+)
+);
+
+// ✅ LOAD UserDetails (THIS FIXES YOUR ERROR)
+UserDetails userDetails =
+userDetailsService.loadUserByUsername(user.getUsername());
+
+// ✅ PASS UserDetails, NOT STRING
+return jwtUtil.generateToken(userDetails);
+}
 }
