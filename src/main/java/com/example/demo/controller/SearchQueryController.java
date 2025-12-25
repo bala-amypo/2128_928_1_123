@@ -1,6 +1,6 @@
 package com.example.demo.controller;
 
-import com.example.demo.model.SearchQueryRecord;
+import com.example.demo.entity.SearchQueryRecord;
 import com.example.demo.service.SearchQueryService;
 import org.springframework.web.bind.annotation.*;
 
