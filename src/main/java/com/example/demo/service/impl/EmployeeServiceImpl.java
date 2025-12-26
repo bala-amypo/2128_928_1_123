@@ -1,43 +1,28 @@
 package com.example.demo.service.impl;
 
+import com.example.demo.model.User;
+import com.example.demo.repository.UserRepository;
+import com.example.demo.service.UserService;
 import com.example.demo.exception.ResourceNotFoundException;
-import com.example.demo.model.Employee;
-import com.example.demo.repository.EmployeeRepository;
-import com.example.demo.service.EmployeeService;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
-
 @Service
-public class EmployeeServiceImpl implements EmployeeService {
+public class UserServiceImpl implements UserService {
 
-private final EmployeeRepository repository;
+private final UserRepository userRepository;
 
-public EmployeeServiceImpl(EmployeeRepository repository) {
-this.repository = repository;
+public UserServiceImpl(UserRepository userRepository) {
+this.userRepository = userRepository;
 }
 
 @Override
-public Employee createEmployee(Employee employee) {
-employee.setActive(true);
-return repository.save(employee);
+public User getByUsername(String username) {
+return userRepository.findByUsername(username)
+.orElseThrow(() -> new ResourceNotFoundException("User not found: " + username));
 }
 
 @Override
-public Employee getEmployeeById(Long id) {
-return repository.findById(id)
-.orElseThrow(() -> new ResourceNotFoundException("Employee not found"));
-}
-
-@Override
-public List<Employee> getAllEmployees() {
-return repository.findAll();
-}
-
-@Override
-public Employee deactivateEmployee(Long id) {
-Employee employee = getEmployeeById(id);
-employee.setActive(false);
-return repository.save(employee);
+public User save(User user) {
+return userRepository.save(user);
 }
 }
