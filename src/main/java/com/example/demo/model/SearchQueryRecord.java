@@ -22,8 +22,9 @@ public class SearchQueryRecord {
     @Column(updatable = false)
     private LocalDateTime searchedAt;
 
+    // 🔴 FIX: protected → public (tests call this directly)
     @PrePersist
-    protected void onCreate() {
+    public void onCreate() {
         this.searchedAt = LocalDateTime.now();
     }
 

@@ -32,14 +32,16 @@ public class Employee {
 
     private LocalDateTime updatedAt;
 
+    // 🔴 FIX: protected → public (tests call this directly)
     @PrePersist
-    protected void onCreate() {
+    public void onCreate() {
         this.createdAt = LocalDateTime.now();
         this.updatedAt = this.createdAt;
     }
 
+    // 🔴 FIX: protected → public (tests call this directly)
     @PreUpdate
-    protected void onUpdate() {
+    public void onUpdate() {
         this.updatedAt = LocalDateTime.now();
     }
 
