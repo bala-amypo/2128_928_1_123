@@ -3,54 +3,36 @@ package com.example.demo.model;
 import jakarta.persistence.*;
 
 @Entity
-@Table(name = "employee")
+@Table(name = "employees")
 public class Employee {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+@Id
+@GeneratedValue(strategy = GenerationType.IDENTITY)
+private Long id;
 
-    private String name;
-    private String email;
-    private String department;
+private String fullName;
+private String email;
+private String department;
+private String jobTitle;
+private boolean active = true;
 
-    public Employee() {}
+public Employee() {}
 
-    public Employee(String name, String email, String department) {
-        this.name = name;
-        this.email = email;
-        this.department = department;
-    }
+public Long getId() { return id; }
+public void setId(Long id) { this.id = id; }
 
-    public Long getId() {
-        return id;
-    }
+public String getFullName() { return fullName; }
+public void setFullName(String fullName) { this.fullName = fullName; }
 
-    public void setId(Long id) {
-        this.id = id;
-    }
+public String getEmail() { return email; }
+public void setEmail(String email) { this.email = email; }
 
-    public String getName() {
-        return name;
-    }
+public String getDepartment() { return department; }
+public void setDepartment(String department) { this.department = department; }
 
-    public void setName(String name) {
-        this.name = name;
-    }
+public String getJobTitle() { return jobTitle; }
+public void setJobTitle(String jobTitle) { this.jobTitle = jobTitle; }
 
-    public String getEmail() {
-        return email;
-    }
-
-    public void setEmail(String email) {
-        this.email = email;
-    }
-
-    public String getDepartment() {
-        return department;
-    }
-
-    public void setDepartment(String department) {
-        this.department = department;
-    }
+public boolean isActive() { return active; }
+public void setActive(boolean active) { this.active = active; }
 }
