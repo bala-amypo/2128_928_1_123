@@ -34,9 +34,9 @@ public class AuthServiceImpl implements AuthService {
         Employee saved = employeeRepository.save(employee);
 
         String token = jwtTokenProvider.generateToken(
-                saved.getEmail(),
-                saved.getId(),
-                "USER"
+                saved.getId(),        // ✅ Long FIRST
+                saved.getEmail(),     // ✅ String SECOND
+                "USER"                // ✅ role
         );
 
         return new AuthResponse(
@@ -64,8 +64,8 @@ public class AuthServiceImpl implements AuthService {
         }
 
         String token = jwtTokenProvider.generateToken(
-                employee.getEmail(),
-                employee.getId(),
+                employee.getId(),     // ✅ Long FIRST
+                employee.getEmail(),  // ✅ String SECOND
                 "USER"
         );
 
