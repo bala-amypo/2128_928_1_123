@@ -4,9 +4,10 @@ import com.example.demo.model.Employee;
 import com.example.demo.model.EmployeeSkill;
 
 import java.util.List;
-
-public interface EmployeeSkillService {
-List<EmployeeSkill> getByEmployeeId(Long id);
-List<EmployeeSkill> getBySkillId(Long id);
-List<Employee> searchEmployeesBySkills(List<String> skills);
+public interface SkillService {
+    Skill createSkill(Skill skill);
+    Skill updateSkill(Long id, Skill skill);
+    Skill getSkillById(Long id);
+    List<Skill> getAllSkills();
+    void deactivateSkill(Long id);
 }
