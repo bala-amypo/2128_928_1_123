@@ -1,10 +1,11 @@
 package com.example.demo.controller;
 
-import com.example.demo.model.Skill;
-import com.example.demo.service.SkillService;
+import java.util.List;
+
 import org.springframework.web.bind.annotation.*;
 
-import java.util.List;
+import com.example.demo.model.Skill;
+import com.example.demo.service.SkillService;
 
 @RestController
 @RequestMapping("/skills")
@@ -18,21 +19,11 @@ this.service = service;
 
 @PostMapping
 public Skill create(@RequestBody Skill skill) {
-return service.createSkill(skill);
-}
-
-@GetMapping("/{id}")
-public Skill getById(@PathVariable Long id) {
-return service.getSkillById(id);
+return service.save(skill);
 }
 
 @GetMapping
 public List<Skill> getAll() {
-return service.getAllSkills();
-}
-
-@PutMapping("/deactivate/{id}")
-public Skill deactivate(@PathVariable Long id) {
-return service.deactivateSkill(id);
+return service.getAll();
 }
 }

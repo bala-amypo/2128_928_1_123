@@ -1,28 +1,23 @@
 package com.example.demo.controller;
 
-import com.example.demo.model.SearchQueryRecord;
-import com.example.demo.service.SearchQueryService;
-import org.springframework.web.bind.annotation.*;
-
 import java.util.List;
 
+import org.springframework.web.bind.annotation.*;
+
+import com.example.demo.service.EmployeeSkillService;
+
 @RestController
-@RequestMapping("/search-queries")
+@RequestMapping("/search")
 public class SearchQueryController {
 
-private final SearchQueryService service;
+private final EmployeeSkillService employeeSkillService;
 
-public SearchQueryController(SearchQueryService service) {
-this.service = service;
+public SearchQueryController(EmployeeSkillService employeeSkillService) {
+this.employeeSkillService = employeeSkillService;
 }
 
 @PostMapping
-public SearchQueryRecord save(@RequestBody SearchQueryRecord record) {
-return service.saveQuery(record);
-}
-
-@GetMapping
-public List<SearchQueryRecord> getAll() {
-return service.getAllQueries();
+public List<Object> searchBySkills(@RequestBody List<String> skills) {
+return employeeSkillService.findEmployeesByAllSkills(skills);
 }
 }
