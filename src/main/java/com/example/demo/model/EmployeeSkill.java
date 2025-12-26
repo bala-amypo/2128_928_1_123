@@ -6,73 +6,52 @@ import jakarta.persistence.*;
 @Table(name = "employee_skills")
 public class EmployeeSkill {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+@Id
+@GeneratedValue(strategy = GenerationType.IDENTITY)
+private Long id;
 
-    @ManyToOne
-    @JoinColumn(name = "employee_id")
-    private Employee employee;
+@ManyToOne
+@JoinColumn(name = "employee_id", nullable = false)
+private Employee employee;
 
-    @ManyToOne
-    @JoinColumn(name = "skill_id")
-    private Skill skill;
+@ManyToOne
+@JoinColumn(name = "skill_id", nullable = false)
+private Skill skill;
 
-    private String proficiencyLevel;
-    private Integer yearsOfExperience;
+@Column(nullable = false)
+private Boolean active = true;
 
-    private Boolean active = true;
+/* getters & setters */
 
-    public EmployeeSkill() {
-    }
+public Long getId() {
+return id;
+}
 
-    // ---------- Getters & Setters ----------
+public void setId(Long id) {
+this.id = id;
+}
 
-    public Long getId() {
-        return id;
-    }
+public Employee getEmployee() {
+return employee;
+}
 
-    public void setId(Long id) {
-        this.id = id;
-    }
+public void setEmployee(Employee employee) {
+this.employee = employee;
+}
 
-    public Employee getEmployee() {
-        return employee;
-    }
+public Skill getSkill() {
+return skill;
+}
 
-    public void setEmployee(Employee employee) {
-        this.employee = employee;
-    }
+public void setSkill(Skill skill) {
+this.skill = skill;
+}
 
-    public Skill getSkill() {
-        return skill;
-    }
+public Boolean getActive() {
+return active;
+}
 
-    public void setSkill(Skill skill) {
-        this.skill = skill;
-    }
-
-    public String getProficiencyLevel() {
-        return proficiencyLevel;
-    }
-
-    public void setProficiencyLevel(String proficiencyLevel) {
-        this.proficiencyLevel = proficiencyLevel;
-    }
-
-    public Integer getYearsOfExperience() {
-        return yearsOfExperience;
-    }
-
-    public void setYearsOfExperience(Integer yearsOfExperience) {
-        this.yearsOfExperience = yearsOfExperience;
-    }
-
-    public Boolean getActive() {
-        return active;
-    }
-
-    public void setActive(Boolean active) {
-        this.active = active;
-    }
+public void setActive(Boolean active) {
+this.active = active;
+}
 }

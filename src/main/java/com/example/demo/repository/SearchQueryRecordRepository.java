@@ -4,5 +4,5 @@ import com.example.demo.model.SearchQueryRecord;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 public interface SearchQueryRecordRepository
-        extends JpaRepository<SearchQueryRecord, Long> {
+extends JpaRepository<SearchQueryRecord, Long> {
 }

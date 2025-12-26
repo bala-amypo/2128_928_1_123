@@ -1,12 +1,9 @@
 package com.example.demo.service;
 
-import com.example.demo.model.SearchQueryRecord;
-
+import com.example.demo.model.Employee;
 import java.util.List;
 
 public interface SearchQueryService {
 
-    SearchQueryRecord saveQuery(String query);
-
-    List<SearchQueryRecord> getAllQueries();
+List<Employee> searchEmployeesBySkills(List<String> skillNames);
 }
