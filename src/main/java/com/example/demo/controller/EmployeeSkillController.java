@@ -3,7 +3,6 @@ package com.example.demo.controller;
 import com.example.demo.model.Employee;
 import com.example.demo.model.EmployeeSkill;
 import com.example.demo.service.EmployeeSkillService;
-import jakarta.validation.Valid;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -12,31 +11,24 @@ import java.util.List;
 @RequestMapping("/employee-skills")
 public class EmployeeSkillController {
 
-    private final EmployeeSkillService service;
+private final EmployeeSkillService service;
 
-    public EmployeeSkillController(EmployeeSkillService service) {
-        this.service = service;
-    }
+public EmployeeSkillController(EmployeeSkillService service) {
+this.service = service;
+}
 
-    @PostMapping
-    public EmployeeSkill addEmployeeSkill(@Valid @RequestBody EmployeeSkill employeeSkill) {
-        return service.addEmployeeSkill(employeeSkill);
-    }
+@GetMapping("/employee/{id}")
+public List<EmployeeSkill> byEmployee(@PathVariable Long id) {
+return service.getByEmployeeId(id);
+}
 
-    @GetMapping("/employee/{employeeId}")
-    public List<EmployeeSkill> getSkillsByEmployee(@PathVariable Long employeeId) {
-        return service.getSkillsByEmployeeId(employeeId);
-    }
+@GetMapping("/skill/{id}")
+public List<EmployeeSkill> bySkill(@PathVariable Long id) {
+return service.getBySkillId(id);
+}
 
-    @GetMapping("/skill/{skillId}")
-    public List<EmployeeSkill> getEmployeesBySkill(@PathVariable Long skillId) {
-        return service.getEmployeesBySkillId(skillId);
-    }
-
-    // 🔥 SEARCH API (core test case)
-    @GetMapping("/search")
-    public List<Employee> searchEmployeesBySkills(
-            @RequestParam List<String> skills) {
-        return service.searchEmployeesBySkills(skills);
-    }
+@PostMapping("/search")
+public List<Employee> search(@RequestBody List<String> skills) {
+return service.searchEmployeesBySkills(skills);
+}
 }
