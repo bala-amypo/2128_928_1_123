@@ -6,49 +6,39 @@ import jakarta.persistence.*;
 @Table(name = "skills")
 public class Skill {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+@Id
+@GeneratedValue(strategy = GenerationType.IDENTITY)
+private Long id;
 
-    private String name;
-    private String description;
+@Column(nullable = false)
+private String name;
 
-    private Boolean active = true;
+@Column(nullable = false)
+private Boolean active = true;
 
-    public Skill() {
-    }
+/* getters & setters */
 
-    // ---------- Getters & Setters ----------
+public Long getId() {
+return id;
+}
 
-    public Long getId() {
-        return id;
-    }
+public void setId(Long id) {
+this.id = id;
+}
 
-    public void setId(Long id) {
-        this.id = id;
-    }
+public String getName() {
+return name;
+}
 
-    public String getName() {
-        return name;
-    }
+public void setName(String name) {
+this.name = name;
+}
 
-    public void setName(String name) {
-        this.name = name;
-    }
+public Boolean getActive() {
+return active;
+}
 
-    public String getDescription() {
-        return description;
-    }
-
-    public void setDescription(String description) {
-        this.description = description;
-    }
-
-    public Boolean getActive() {
-        return active;
-    }
-
-    public void setActive(Boolean active) {
-        this.active = active;
-    }
+public void setActive(Boolean active) {
+this.active = active;
+}
 }

@@ -4,53 +4,46 @@ import jakarta.persistence.*;
 import java.time.LocalDateTime;
 
 @Entity
-@Table(name = "search_queries")
+@Table(name = "search_query_records")
 public class SearchQueryRecord {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+@Id
+@GeneratedValue(strategy = GenerationType.IDENTITY)
+private Long id;
 
-    private String skillsRequested;
-    private Integer resultsCount;
+@Column(nullable = false)
+private String queryText;
 
-    private LocalDateTime searchedAt;
+@Column(nullable = false)
+private LocalDateTime searchedAt;
 
-    public SearchQueryRecord() {
-        this.searchedAt = LocalDateTime.now();
-    }
+public SearchQueryRecord() {
+this.searchedAt = LocalDateTime.now();
+}
 
-    // ---------- Getters & Setters ----------
+/* getters & setters */
 
-    public Long getId() {
-        return id;
-    }
+public Long getId() {
+return id;
+}
 
-    public void setId(Long id) {
-        this.id = id;
-    }
+public void setId(Long id) {
+this.id = id;
+}
 
-    public String getSkillsRequested() {
-        return skillsRequested;
-    }
+public String getQueryText() {
+return queryText;
+}
 
-    public void setSkillsRequested(String skillsRequested) {
-        this.skillsRequested = skillsRequested;
-    }
+public void setQueryText(String queryText) {
+this.queryText = queryText;
+}
 
-    public Integer getResultsCount() {
-        return resultsCount;
-    }
+public LocalDateTime getSearchedAt() {
+return searchedAt;
+}
 
-    public void setResultsCount(Integer resultsCount) {
-        this.resultsCount = resultsCount;
-    }
-
-    public LocalDateTime getSearchedAt() {
-        return searchedAt;
-    }
-
-    public void setSearchedAt(LocalDateTime searchedAt) {
-        this.searchedAt = searchedAt;
-    }
+public void setSearchedAt(LocalDateTime searchedAt) {
+this.searchedAt = searchedAt;
+}
 }
