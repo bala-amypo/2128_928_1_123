@@ -6,33 +6,67 @@ import jakarta.persistence.*;
 @Table(name = "employees")
 public class Employee {
 
-@Id
-@GeneratedValue(strategy = GenerationType.IDENTITY)
-private Long id;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
 
-private String fullName;
-private String email;
-private String department;
-private String jobTitle;
-private boolean active = true;
+    private String fullName;
+    private String email;
+    private String department;
+    private String jobTitle;
 
-public Employee() {}
+    private Boolean active = true;
 
-public Long getId() { return id; }
-public void setId(Long id) { this.id = id; }
+    public Employee() {
+    }
 
-public String getFullName() { return fullName; }
-public void setFullName(String fullName) { this.fullName = fullName; }
+    // ---------- Getters & Setters ----------
 
-public String getEmail() { return email; }
-public void setEmail(String email) { this.email = email; }
+    public Long getId() {
+        return id;
+    }
 
-public String getDepartment() { return department; }
-public void setDepartment(String department) { this.department = department; }
+    public void setId(Long id) {
+        this.id = id;
+    }
 
-public String getJobTitle() { return jobTitle; }
-public void setJobTitle(String jobTitle) { this.jobTitle = jobTitle; }
+    public String getFullName() {
+        return fullName;
+    }
 
-public boolean isActive() { return active; }
-public void setActive(boolean active) { this.active = active; }
+    public void setFullName(String fullName) {
+        this.fullName = fullName;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public String getDepartment() {
+        return department;
+    }
+
+    public void setDepartment(String department) {
+        this.department = department;
+    }
+
+    public String getJobTitle() {
+        return jobTitle;
+    }
+
+    public void setJobTitle(String jobTitle) {
+        this.jobTitle = jobTitle;
+    }
+
+    public Boolean getActive() {
+        return active;
+    }
+
+    public void setActive(Boolean active) {
+        this.active = active;
+    }
 }

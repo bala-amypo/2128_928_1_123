@@ -18,7 +18,12 @@ public class User {
 
     private String role;
 
-    // -------- Getters & Setters --------
+    private Boolean active = true;
+
+    public User() {
+    }
+
+    // ---------- Getters & Setters ----------
 
     public Long getId() {
         return id;
@@ -39,16 +44,25 @@ public class User {
     public String getPassword() {
         return password;
     }
- 
+
+    // Password will be encoded before save
     public void setPassword(String password) {
         this.password = password;
     }
- 
+
     public String getRole() {
         return role;
     }
- 
+
     public void setRole(String role) {
         this.role = role;
+    }
+
+    public Boolean getActive() {
+        return active;
+    }
+
+    public void setActive(Boolean active) {
+        this.active = active;
     }
 }

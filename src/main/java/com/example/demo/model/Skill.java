@@ -6,32 +6,49 @@ import jakarta.persistence.*;
 @Table(name = "skills")
 public class Skill {
 
-@Id
-@GeneratedValue(strategy = GenerationType.IDENTITY)
-private Long id;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
 
-private String name;
-private String description;
-private boolean active = true;
+    private String name;
+    private String description;
 
-@ManyToOne
-@JoinColumn(name = "category_id")
-private SkillCategory category;
+    private Boolean active = true;
 
-public Skill() {}
+    public Skill() {
+    }
 
-public Long getId() { return id; }
-public void setId(Long id) { this.id = id; }
+    // ---------- Getters & Setters ----------
 
-public String getName() { return name; }
-public void setName(String name) { this.name = name; }
+    public Long getId() {
+        return id;
+    }
 
-public String getDescription() { return description; }
-public void setDescription(String description) { this.description = description; }
+    public void setId(Long id) {
+        this.id = id;
+    }
 
-public boolean isActive() { return active; }
-public void setActive(boolean active) { this.active = active; }
+    public String getName() {
+        return name;
+    }
 
-public SkillCategory getCategory() { return category; }
-public void setCategory(SkillCategory category) { this.category = category; }
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    public Boolean getActive() {
+        return active;
+    }
+
+    public void setActive(Boolean active) {
+        this.active = active;
+    }
 }
