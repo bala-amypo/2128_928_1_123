@@ -22,18 +22,16 @@ public class SearchQueryController {
     public List<Employee> searchEmployees(
             @RequestBody EmployeeSearchRequest request) {
 
-        return searchQueryService.searchEmployees(request.getSkillIds());
+        return searchQueryService.searchBySkills(request.getSkillIds());
     }
 
     @GetMapping("/{id}")
     public SearchQueryRecord getQuery(@PathVariable Long id) {
-        return searchQueryService.getById(id);
+        return searchQueryService.findById(id);
     }
 
     @GetMapping("/user/{userId}")
-    public List<SearchQueryRecord> getQueriesByUser(
-            @PathVariable Long userId) {
-
-        return searchQueryService.getByUser(userId);
+    public List<SearchQueryRecord> getQueriesByUser(@PathVariable Long userId) {
+        return searchQueryService.findByUser(userId);
     }
 }
