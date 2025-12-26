@@ -1,7 +1,7 @@
 package com.example.demo.controller;
 
-import com.example.demo.entity.Employee;
-import com.example.demo.entity.EmployeeSkill;
+import com.example.demo.model.Employee;
+import com.example.demo.model.EmployeeSkill;
 import com.example.demo.service.EmployeeSkillService;
 import jakarta.validation.Valid;
 import org.springframework.web.bind.annotation.*;

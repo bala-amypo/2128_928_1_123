@@ -1,47 +1,26 @@
-package com.example.demo.entity;
+package com.example.demo.model;
 
 import jakarta.persistence.*;
-import java.time.LocalDateTime;
-import java.util.List;
 
 @Entity
-@Table(name = "employees")
+@Table(name = "employee")
 public class Employee {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(nullable = false, unique = true)
+    private String name;
     private String email;
-
-    private String fullName;
-
     private String department;
 
-    private String jobTitle;
+    public Employee() {}
 
-    private boolean active = true;
-
-    private LocalDateTime createdAt;
-
-    private LocalDateTime updatedAt;
-
-    @OneToMany(mappedBy = "employee", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<EmployeeSkill> employeeSkills;
-
-    @PrePersist
-    public void onCreate() {
-        this.createdAt = LocalDateTime.now();
-        this.updatedAt = LocalDateTime.now();
+    public Employee(String name, String email, String department) {
+        this.name = name;
+        this.email = email;
+        this.department = department;
     }
-
-    @PreUpdate
-    public void onUpdate() {
-        this.updatedAt = LocalDateTime.now();
-    }
-
-    // -------- Getters & Setters --------
 
     public Long getId() {
         return id;
@@ -49,6 +28,14 @@ public class Employee {
 
     public void setId(Long id) {
         this.id = id;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
     }
 
     public String getEmail() {
@@ -59,51 +46,11 @@ public class Employee {
         this.email = email;
     }
 
-    public String getFullName() {
-        return fullName;
-    }
-
-    public void setFullName(String fullName) {
-        this.fullName = fullName;
-    }
-
     public String getDepartment() {
         return department;
     }
 
     public void setDepartment(String department) {
         this.department = department;
-    }
-
-    public String getJobTitle() {
-        return jobTitle;
-    }
-
-    public void setJobTitle(String jobTitle) {
-        this.jobTitle = jobTitle;
-    }
-
-    public boolean isActive() {
-        return active;
-    }
-
-    public void setActive(boolean active) {
-        this.active = active;
-    }
-
-    public LocalDateTime getCreatedAt() {
-        return createdAt;
-    }
-
-    public LocalDateTime getUpdatedAt() {
-        return updatedAt;
-    }
-
-    public List<EmployeeSkill> getEmployeeSkills() {
-        return employeeSkills;
-    }
-
-    public void setEmployeeSkills(List<EmployeeSkill> employeeSkills) {
-        this.employeeSkills = employeeSkills;
     }
 }
