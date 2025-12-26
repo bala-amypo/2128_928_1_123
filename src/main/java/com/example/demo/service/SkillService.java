@@ -5,7 +5,7 @@ import java.util.List;
 
 public interface SkillService {
 
-Skill saveSkill(Skill skill);
+Skill createSkill(Skill skill);
 
 Skill getSkillById(Long id);
 

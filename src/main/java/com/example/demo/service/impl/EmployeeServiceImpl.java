@@ -1,9 +1,9 @@
 package com.example.demo.service.impl;
 
+import com.example.demo.exception.ResourceNotFoundException;
 import com.example.demo.model.Employee;
 import com.example.demo.repository.EmployeeRepository;
 import com.example.demo.service.EmployeeService;
-import com.example.demo.exception.ResourceNotFoundException;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -18,7 +18,8 @@ this.repository = repository;
 }
 
 @Override
-public Employee saveEmployee(Employee employee) {
+public Employee createEmployee(Employee employee) {
+employee.setActive(true);
 return repository.save(employee);
 }
 

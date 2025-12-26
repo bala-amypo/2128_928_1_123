@@ -10,44 +10,29 @@ import java.util.List;
 @RequestMapping("/skills")
 public class SkillController {
 
-    private final SkillService service;
+private final SkillService service;
 
-    public SkillController(SkillService service) {
-        this.service = service;
-    }
+public SkillController(SkillService service) {
+this.service = service;
+}
 
-    @PostMapping
-    public Skill create(@RequestBody Skill skill) {
-        return service.createSkill(skill);
-    }
+@PostMapping
+public Skill create(@RequestBody Skill skill) {
+return service.createSkill(skill);
+}
 
-    @GetMapping("/{id}")
-    public Skill getById(@PathVariable Long id) {
-        return service.getSkillById(id);
-    }
+@GetMapping("/{id}")
+public Skill getById(@PathVariable Long id) {
+return service.getSkillById(id);
+}
 
-    @GetMapping
-    public List<Skill> getAll() {
-        return service.getAllSkills();
-    }
+@GetMapping
+public List<Skill> getAll() {
+return service.getAllSkills();
+}
 
-    @GetMapping("/active")
-    public List<Skill> getActive() {
-        return service.getActiveSkills();
-    }
-
-    @PutMapping("/{id}")
-    public Skill update(@PathVariable Long id, @RequestBody Skill skill) {
-        return service.updateSkill(id, skill);
-    }
-
-    @PutMapping("/{id}/deactivate")
-    public Skill deactivate(@PathVariable Long id) {
-        return service.deactivateSkill(id);
-    }
-
-    @DeleteMapping("/{id}")
-    public void delete(@PathVariable Long id) {
-        service.deleteSkill(id);
-    }
+@PutMapping("/deactivate/{id}")
+public Skill deactivate(@PathVariable Long id) {
+return service.deactivateSkill(id);
+}
 }

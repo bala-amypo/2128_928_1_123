@@ -1,6 +1,5 @@
 package com.example.demo.controller;
 
-import com.example.demo.model.Employee;
 import com.example.demo.model.EmployeeSkill;
 import com.example.demo.service.EmployeeSkillService;
 import org.springframework.web.bind.annotation.*;
@@ -11,29 +10,22 @@ import java.util.List;
 @RequestMapping("/employee-skills")
 public class EmployeeSkillController {
 
-    private final EmployeeSkillService service;
+private final EmployeeSkillService service;
 
-    public EmployeeSkillController(EmployeeSkillService service) {
-        this.service = service;
-    }
+public EmployeeSkillController(EmployeeSkillService service) {
+this.service = service;
+}
 
-    @PostMapping
-    public EmployeeSkill assignSkill(@RequestBody EmployeeSkill employeeSkill) {
-        return service.assignSkillToEmployee(employeeSkill);
-    }
+@PostMapping("/{employeeId}/{skillId}")
+public EmployeeSkill assignSkill(
+@PathVariable Long employeeId,
+@PathVariable Long skillId
+) {
+return service.assignSkillToEmployee(employeeId, skillId);
+}
 
-    @GetMapping("/employee/{employeeId}")
-    public List<EmployeeSkill> getSkillsByEmployee(@PathVariable Long employeeId) {
-        return service.getSkillsByEmployee(employeeId);
-    }
-
-    @GetMapping("/skill/{skillId}")
-    public List<EmployeeSkill> getEmployeesBySkill(@PathVariable Long skillId) {
-        return service.getEmployeesBySkill(skillId);
-    }
-
-    @PostMapping("/search")
-    public List<Employee> searchEmployees(@RequestBody List<String> skills) {
-        return service.searchEmployeesBySkills(skills);
-    }
+@GetMapping
+public List<EmployeeSkill> getAll() {
+return service.getAllEmployeeSkills();
+}
 }
