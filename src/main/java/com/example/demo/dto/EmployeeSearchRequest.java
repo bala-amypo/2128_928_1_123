@@ -1,10 +1,22 @@
 package com.example.demo.dto;
 
+import io.swagger.v3.oas.annotations.media.Schema;
 import java.util.List;
 
 public class EmployeeSearchRequest {
-    private List<String> skills;
 
-    public List<String> getSkills() { return skills; }
-    public void setSkills(List<String> skills) { this.skills = skills; }
+    @Schema(
+        description = "List of skill IDs to search employees by",
+        example = "[1, 2, 3]",
+        required = true
+    )
+    private List<Long> skillIds;
+
+    public List<Long> getSkillIds() {
+        return skillIds;
+    }
+
+    public void setSkillIds(List<Long> skillIds) {
+        this.skillIds = skillIds;
+    }
 }
