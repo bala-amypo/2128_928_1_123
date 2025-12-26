@@ -18,7 +18,7 @@ public class SkillController {
 
     @PostMapping
     public Skill createSkill(@RequestBody Skill skill) {
-        return skillService.create(skill);
+        return skillService.save(skill);
     }
 
     @PutMapping("/{id}")
@@ -29,12 +29,12 @@ public class SkillController {
 
     @GetMapping("/{id}")
     public Skill getSkill(@PathVariable Long id) {
-        return skillService.getById(id);
+        return skillService.findById(id);
     }
 
     @GetMapping
     public List<Skill> getAllSkills() {
-        return skillService.getAll();
+        return skillService.findAll();
     }
 
     @PutMapping("/{id}/deactivate")
