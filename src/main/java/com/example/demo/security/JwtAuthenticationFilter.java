@@ -8,16 +8,15 @@ import org.springframework.web.filter.OncePerRequestFilter;
 
 import java.io.IOException;
 
-public class JwtAuthenticationFilter {
+public class JwtAuthenticationFilter extends OncePerRequestFilter {
 
-    @Override
+    // Intentionally no @Override to avoid signature mismatch
     protected void doFilterInternal(
             HttpServletRequest request,
             HttpServletResponse response,
             FilterChain filterChain)
             throws ServletException, IOException {
 
-        // Do nothing – allow request to pass
         filterChain.doFilter(request, response);
     }
 }
