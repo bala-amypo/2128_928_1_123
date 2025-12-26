@@ -2,7 +2,7 @@ package com.example.demo.controller;
 
 import com.example.demo.model.Skill;
 import com.example.demo.service.SkillService;
-import jakarta.validation.Valid;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -11,35 +11,36 @@ import java.util.List;
 @RequestMapping("/skills")
 public class SkillController {
 
-    private final SkillService service;
+    private final SkillService skillService;
 
-    public SkillController(SkillService service) {
-        this.service = service;
+    public SkillController(SkillService skillService) {
+        this.skillService = skillService;
     }
 
     @PostMapping
-    public Skill createSkill(@Valid @RequestBody Skill skill) {
-        return service.createSkill(skill);
+    public ResponseEntity<Skill> createSkill(@RequestBody Skill skill) {
+        return ResponseEntity.ok(skillService.createSkill(skill));
     }
 
     @GetMapping("/{id}")
-    public Skill getSkillById(@PathVariable Long id) {
-        return service.getSkillById(id);
+    public ResponseEntity<Skill> getSkill(@PathVariable Long id) {
+        return ResponseEntity.ok(skillService.getSkillById(id));
     }
 
     @GetMapping
-    public List<Skill> getAllSkills() {
-        return service.getAllSkills();
+    public ResponseEntity<List<Skill>> getAllSkills() {
+        return ResponseEntity.ok(skillService.getAllSkills());
     }
 
     @PutMapping("/{id}")
-    public Skill updateSkill(@PathVariable Long id,
-                             @Valid @RequestBody Skill skill) {
-        return service.updateSkill(id, skill);
+    public ResponseEntity<Skill> updateSkill(
+            @PathVariable Long id,
+            @RequestBody Skill skill) {
+        return ResponseEntity.ok(skillService.updateSkill(id, skill));
     }
 
-    @DeleteMapping("/{id}")
-    public void deleteSkill(@PathVariable Long id) {
-        service.deleteSkill(id);
+    @PutMapping("/{id}/deactivate")
+    public ResponseEntity<Skill> deactivateSkill(@PathVariable Long id) {
+        return ResponseEntity.ok(skillService.deactivateSkill(id));
     }
 }
