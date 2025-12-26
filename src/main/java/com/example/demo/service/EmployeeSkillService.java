@@ -5,7 +5,11 @@ import java.util.List;
 
 public interface EmployeeSkillService {
 
-EmployeeSkill assignSkillToEmployee(Long employeeId, Long skillId);
+EmployeeSkill addSkillToEmployee(EmployeeSkill employeeSkill);
 
-List<EmployeeSkill> getAllEmployeeSkills();
+List<EmployeeSkill> getSkillsByEmployee(Long employeeId);
+
+List<EmployeeSkill> getEmployeesBySkill(Long skillId);
+
+List<Long> searchEmployeesBySkillNames(List<String> skillNames);
 }

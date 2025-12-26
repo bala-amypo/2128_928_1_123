@@ -16,16 +16,23 @@ public EmployeeSkillController(EmployeeSkillService service) {
 this.service = service;
 }
 
-@PostMapping("/{employeeId}/{skillId}")
-public EmployeeSkill assignSkill(
-@PathVariable Long employeeId,
-@PathVariable Long skillId
-) {
-return service.assignSkillToEmployee(employeeId, skillId);
+@PostMapping
+public EmployeeSkill add(@RequestBody EmployeeSkill employeeSkill) {
+return service.addSkillToEmployee(employeeSkill);
 }
 
-@GetMapping
-public List<EmployeeSkill> getAll() {
-return service.getAllEmployeeSkills();
+@GetMapping("/employee/{employeeId}")
+public List<EmployeeSkill> getByEmployee(@PathVariable Long employeeId) {
+return service.getSkillsByEmployee(employeeId);
+}
+
+@GetMapping("/skill/{skillId}")
+public List<EmployeeSkill> getBySkill(@PathVariable Long skillId) {
+return service.getEmployeesBySkill(skillId);
+}
+
+@PostMapping("/search")
+public List<Long> searchEmployees(@RequestBody List<String> skillNames) {
+return service.searchEmployeesBySkillNames(skillNames);
 }
 }

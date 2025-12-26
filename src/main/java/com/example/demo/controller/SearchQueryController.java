@@ -1,13 +1,13 @@
 package com.example.demo.controller;
 
-import com.example.demo.model.Employee;
+import com.example.demo.model.SearchQueryRecord;
 import com.example.demo.service.SearchQueryService;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
 @RestController
-@RequestMapping("/search")
+@RequestMapping("/search-queries")
 public class SearchQueryController {
 
 private final SearchQueryService service;
@@ -16,8 +16,13 @@ public SearchQueryController(SearchQueryService service) {
 this.service = service;
 }
 
-@PostMapping("/employees")
-public List<Employee> searchEmployees(@RequestBody List<String> skills) {
-return service.searchEmployeesBySkills(skills);
+@PostMapping
+public SearchQueryRecord save(@RequestBody SearchQueryRecord record) {
+return service.saveQuery(record);
+}
+
+@GetMapping
+public List<SearchQueryRecord> getAll() {
+return service.getAllQueries();
 }
 }
