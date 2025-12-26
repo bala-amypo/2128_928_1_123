@@ -1,15 +1,15 @@
 package com.example.demo.service;
 
-import com.example.demo.model.EmployeeSkill;
 import java.util.List;
+import com.example.demo.model.EmployeeSkill;
 
 public interface EmployeeSkillService {
 
-EmployeeSkill addSkillToEmployee(EmployeeSkill employeeSkill);
+EmployeeSkill assignSkill(EmployeeSkill employeeSkill);
 
 List<EmployeeSkill> getSkillsByEmployee(Long employeeId);
 
 List<EmployeeSkill> getEmployeesBySkill(Long skillId);
 
-List<Long> searchEmployeesBySkillNames(List<String> skillNames);
+List<Object> searchEmployeesBySkills(List<String> skillNames);
 }
