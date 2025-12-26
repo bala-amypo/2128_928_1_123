@@ -4,7 +4,7 @@ import com.example.demo.model.User;
 
 public interface UserService {
 
-    User createUser(User user);
+User findByUsername(String username);
 
-    User findByUsername(String username);
+User save(User user);
 }

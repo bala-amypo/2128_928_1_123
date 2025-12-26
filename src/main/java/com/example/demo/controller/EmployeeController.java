@@ -18,20 +18,20 @@ this.service = service;
 
 @PostMapping
 public Employee create(@RequestBody Employee employee) {
-return service.createEmployee(employee);
+return service.create(employee);
 }
 
 @GetMapping("/{id}")
 public Employee getById(@PathVariable Long id) {
-return service.getEmployeeById(id);
+return service.getById(id);
 }
 
 @GetMapping
 public List<Employee> getAll() {
-return service.getAllEmployees();
+return service.getAll();
 }
 
-@PutMapping("/deactivate/{id}")
+@PutMapping("/{id}/deactivate")
 public Employee deactivate(@PathVariable Long id) {
 return service.deactivateEmployee(id);
 }
