@@ -7,12 +7,12 @@ import org.springframework.web.bind.annotation.*;
 public class AuthController {
 
     @PostMapping("/register")
-    public Object register() {
+    public Object register(@RequestBody Object body) {
         return null;
     }
 
     @PostMapping("/login")
-    public Object login() {
+    public Object login(@RequestBody Object body) {
         return null;
     }
 }

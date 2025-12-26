@@ -7,26 +7,27 @@ import org.springframework.web.bind.annotation.*;
 public class SkillCategoryController {
 
     @PostMapping
-    public Object create() {
+    public Object createCategory(@RequestBody Object body) {
         return null;
     }
 
     @PutMapping("/{id}")
-    public Object update(@PathVariable Long id) {
+    public Object updateCategory(@PathVariable Long id,
+                                 @RequestBody Object body) {
         return null;
     }
 
     @GetMapping("/{id}")
-    public Object getById(@PathVariable Long id) {
+    public Object getCategory(@PathVariable Long id) {
         return null;
     }
 
     @GetMapping
-    public Object getAll() {
+    public Object getAllCategories() {
         return null;
     }
 
     @PutMapping("/{id}/deactivate")
-    public void deactivate(@PathVariable Long id) {
+    public void deactivateCategory(@PathVariable Long id) {
     }
 }
