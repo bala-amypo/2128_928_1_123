@@ -7,7 +7,6 @@ import com.example.demo.model.Employee;
 import com.example.demo.repository.EmployeeRepository;
 import com.example.demo.security.JwtTokenProvider;
 import com.example.demo.service.AuthService;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.Optional;
@@ -17,40 +16,35 @@ public class AuthServiceImpl implements AuthService {
 
     private final EmployeeRepository employeeRepository;
     private final JwtTokenProvider jwtTokenProvider;
-    private final BCryptPasswordEncoder passwordEncoder;
 
     public AuthServiceImpl(EmployeeRepository employeeRepository,
-                           JwtTokenProvider jwtTokenProvider,
-                           BCryptPasswordEncoder passwordEncoder) {
+                           JwtTokenProvider jwtTokenProvider) {
         this.employeeRepository = employeeRepository;
         this.jwtTokenProvider = jwtTokenProvider;
-        this.passwordEncoder = passwordEncoder;
     }
 
     @Override
     public AuthResponse register(AuthRegisterRequest request) {
 
         Employee employee = new Employee();
-        employee.setFullName(request.getFullName());
         employee.setEmail(request.getEmail());
-        employee.setDepartment(request.getDepartment());
-        employee.setJobTitle(request.getJobTitle());
+        employee.setFullName(request.getFullName());
         employee.setActive(true);
-
-        // password is optional in tests but must be encoded if present
-        if (request.getPassword() != null) {
-            employee.setPassword(passwordEncoder.encode(request.getPassword()));
-        }
 
         Employee saved = employeeRepository.save(employee);
 
         String token = jwtTokenProvider.generateToken(
                 saved.getEmail(),
-                "USER",
-                saved.getId()
+                saved.getId(),
+                "USER"
         );
 
-        return new AuthResponse(token);
+        return new AuthResponse(
+                token,
+                saved.getId(),
+                saved.getEmail(),
+                "USER"
+        );
     }
 
     @Override
@@ -60,28 +54,26 @@ public class AuthServiceImpl implements AuthService {
                 employeeRepository.findByEmail(request.getEmail());
 
         if (employeeOpt.isEmpty()) {
-            throw new RuntimeException("Invalid email or password");
+            throw new RuntimeException("Invalid credentials");
         }
 
         Employee employee = employeeOpt.get();
 
         if (!employee.getActive()) {
-            throw new RuntimeException("Employee is inactive");
-        }
-
-        // password check only if password exists
-        if (employee.getPassword() != null &&
-            request.getPassword() != null &&
-            !passwordEncoder.matches(request.getPassword(), employee.getPassword())) {
-            throw new RuntimeException("Invalid email or password");
+            throw new RuntimeException("Employee inactive");
         }
 
         String token = jwtTokenProvider.generateToken(
                 employee.getEmail(),
-                "USER",
-                employee.getId()
+                employee.getId(),
+                "USER"
         );
 
-        return new AuthResponse(token);
+        return new AuthResponse(
+                token,
+                employee.getId(),
+                employee.getEmail(),
+                "USER"
+        );
     }
 }
