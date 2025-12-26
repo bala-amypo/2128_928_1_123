@@ -4,25 +4,18 @@ import jakarta.persistence.*;
 import java.time.LocalDateTime;
 
 @Entity
-@Table(name = "search_query_records")
+@Table(name = "search_queries")
 public class SearchQueryRecord {
 
 @Id
 @GeneratedValue(strategy = GenerationType.IDENTITY)
 private Long id;
 
-@Column(nullable = false)
 private String query;
 
-@Column(nullable = false)
 private LocalDateTime timestamp;
 
 public SearchQueryRecord() {}
-
-public SearchQueryRecord(String query) {
-this.query = query;
-this.timestamp = LocalDateTime.now();
-}
 
 public Long getId() {
 return id;

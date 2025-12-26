@@ -10,23 +10,13 @@ public class Skill {
 @GeneratedValue(strategy = GenerationType.IDENTITY)
 private Long id;
 
-@Column(nullable = false)
 private String name;
 
 @ManyToOne
 @JoinColumn(name = "category_id")
 private SkillCategory category;
 
-@Column(nullable = false)
-private Boolean active = true;
-
 public Skill() {}
-
-public Skill(String name, SkillCategory category) {
-this.name = name;
-this.category = category;
-this.active = true;
-}
 
 public Long getId() {
 return id;
@@ -50,13 +40,5 @@ return category;
 
 public void setCategory(SkillCategory category) {
 this.category = category;
-}
-
-public Boolean getActive() {
-return active;
-}
-
-public void setActive(Boolean active) {
-this.active = active;
 }
 }

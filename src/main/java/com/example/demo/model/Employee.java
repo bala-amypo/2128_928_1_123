@@ -10,22 +10,13 @@ public class Employee {
 @GeneratedValue(strategy = GenerationType.IDENTITY)
 private Long id;
 
-@Column(nullable = false)
 private String name;
 
-@Column(nullable = false, unique = true)
 private String email;
 
-@Column(nullable = false)
-private Boolean active = true;
+private String department;
 
 public Employee() {}
-
-public Employee(String name, String email) {
-this.name = name;
-this.email = email;
-this.active = true;
-}
 
 public Long getId() {
 return id;
@@ -51,11 +42,11 @@ public void setEmail(String email) {
 this.email = email;
 }
 
-public Boolean getActive() {
-return active;
+public String getDepartment() {
+return department;
 }
 
-public void setActive(Boolean active) {
-this.active = active;
+public void setDepartment(String department) {
+this.department = department;
 }
 }

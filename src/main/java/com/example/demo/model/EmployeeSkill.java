@@ -11,23 +11,18 @@ public class EmployeeSkill {
 private Long id;
 
 @ManyToOne
-@JoinColumn(name = "employee_id", nullable = false)
+@JoinColumn(name = "employee_id")
 private Employee employee;
 
 @ManyToOne
-@JoinColumn(name = "skill_id", nullable = false)
+@JoinColumn(name = "skill_id")
 private Skill skill;
 
-@Column(nullable = false)
-private Boolean active = true;
+private String proficiency;
+
+private boolean active = true;
 
 public EmployeeSkill() {}
-
-public EmployeeSkill(Employee employee, Skill skill) {
-this.employee = employee;
-this.skill = skill;
-this.active = true;
-}
 
 public Long getId() {
 return id;
@@ -53,11 +48,19 @@ public void setSkill(Skill skill) {
 this.skill = skill;
 }
 
-public Boolean getActive() {
+public String getProficiency() {
+return proficiency;
+}
+
+public void setProficiency(String proficiency) {
+this.proficiency = proficiency;
+}
+
+public boolean isActive() {
 return active;
 }
 
-public void setActive(Boolean active) {
+public void setActive(boolean active) {
 this.active = active;
 }
 }
