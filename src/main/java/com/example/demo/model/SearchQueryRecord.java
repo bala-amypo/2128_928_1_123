@@ -4,6 +4,7 @@ import jakarta.persistence.*;
 import java.time.LocalDateTime;
 
 @Entity
+@Table(name = "search_query_records")
 public class SearchQueryRecord {
 
     @Id
@@ -12,7 +13,7 @@ public class SearchQueryRecord {
 
     private Long searcherId;
     private String skillsRequested;
-    private int resultsCount = 0;
+    private Integer resultsCount = 0;
     private LocalDateTime searchedAt;
 
     @PrePersist
@@ -21,43 +22,17 @@ public class SearchQueryRecord {
         this.resultsCount = 0;
     }
 
-    public Long getId() {
-        return id;
-    }
+    public Long getId() { return id; }
+    public void setId(Long id) { this.id = id; }
 
-    public void setId(Long id) {
-        this.id = id;
-    }
+    public Long getSearcherId() { return searcherId; }
+    public void setSearcherId(Long searcherId) { this.searcherId = searcherId; }
 
-    public Long getSearcherId() {
-        return searcherId;
-    }
+    public String getSkillsRequested() { return skillsRequested; }
+    public void setSkillsRequested(String skillsRequested) { this.skillsRequested = skillsRequested; }
 
-    public void setSearcherId(Long searcherId) {
-        this.searcherId = searcherId;
-    }
+    public Integer getResultsCount() { return resultsCount; }
+    public void setResultsCount(Integer resultsCount) { this.resultsCount = resultsCount; }
 
-    public String getSkillsRequested() {
-        return skillsRequested;
-    }
-
-    public void setSkillsRequested(String skillsRequested) {
-        this.skillsRequested = skillsRequested;
-    }
-
-    public int getResultsCount() {
-        return resultsCount;
-    }
-
-    public void setResultsCount(int resultsCount) {
-        this.resultsCount = resultsCount;
-    }
-
-    public LocalDateTime getSearchedAt() {
-        return searchedAt;
-    }
-
-    public void setSearchedAt(LocalDateTime searchedAt) {
-        this.searchedAt = searchedAt;
-    }
+    public LocalDateTime getSearchedAt() { return searchedAt; }
 }
