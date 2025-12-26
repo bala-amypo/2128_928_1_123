@@ -1,12 +1,12 @@
 package com.example.demo.service.impl;
 
+import java.util.List;
+
+import org.springframework.stereotype.Service;
+
 import com.example.demo.model.EmployeeSkill;
 import com.example.demo.repository.EmployeeSkillRepository;
 import com.example.demo.service.EmployeeSkillService;
-import org.springframework.stereotype.Service;
-
-import java.util.List;
-import java.util.stream.Collectors;
 
 @Service
 public class EmployeeSkillServiceImpl implements EmployeeSkillService {
@@ -18,7 +18,7 @@ this.repository = repository;
 }
 
 @Override
-public EmployeeSkill addSkillToEmployee(EmployeeSkill employeeSkill) {
+public EmployeeSkill assignSkill(EmployeeSkill employeeSkill) {
 employeeSkill.setActive(true);
 return repository.save(employeeSkill);
 }
@@ -33,11 +33,8 @@ public List<EmployeeSkill> getEmployeesBySkill(Long skillId) {
 return repository.findBySkillId(skillId);
 }
 
-/*
- CORE MATRIX SEARCH LOGIC
- */
 @Override
-public List<Long> searchEmployeesBySkillNames(List<String> skillNames) {
-return repository.findEmployeeIdsBySkillNames(skillNames, skillNames.size());
+public List<Object> searchEmployeesBySkills(List<String> skillNames) {
+return repository.findEmployeesByAllSkillNames(skillNames);
 }
 }

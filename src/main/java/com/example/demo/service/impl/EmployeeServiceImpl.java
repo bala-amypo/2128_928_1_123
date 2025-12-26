@@ -1,43 +1,59 @@
 package com.example.demo.service.impl;
 
+import java.util.List;
+
+import org.springframework.stereotype.Service;
+
+import com.example.demo.exception.ResourceNotFoundException;
 import com.example.demo.model.Employee;
 import com.example.demo.repository.EmployeeRepository;
 import com.example.demo.service.EmployeeService;
-import com.example.demo.exception.ResourceNotFoundException;
-import org.springframework.stereotype.Service;
-
-import java.util.List;
 
 @Service
 public class EmployeeServiceImpl implements EmployeeService {
 
-private final EmployeeRepository employeeRepository;
+private final EmployeeRepository repository;
 
-public EmployeeServiceImpl(EmployeeRepository employeeRepository) {
-this.employeeRepository = employeeRepository;
+public EmployeeServiceImpl(EmployeeRepository repository) {
+this.repository = repository;
 }
 
 @Override
-public Employee create(Employee employee) {
+public Employee createEmployee(Employee employee) {
 employee.setActive(true);
-return employeeRepository.save(employee);
+return repository.save(employee);
 }
 
 @Override
-public Employee getById(Long id) {
-return employeeRepository.findById(id)
-.orElseThrow(() -> new ResourceNotFoundException("Employee not found: " + id));
+public Employee getEmployeeById(Long id) {
+return repository.findById(id)
+.orElseThrow(() -> new ResourceNotFoundException("Employee not found with id " + id));
 }
 
 @Override
-public List<Employee> getAll() {
-return employeeRepository.findAll();
+public List<Employee> getAllEmployees() {
+return repository.findAll();
+}
+
+@Override
+public Employee updateEmployee(Long id, Employee employee) {
+Employee existing = getEmployeeById(id);
+existing.setName(employee.getName());
+existing.setEmail(employee.getEmail());
+existing.setDepartment(employee.getDepartment());
+return repository.save(existing);
+}
+
+@Override
+public void deleteEmployee(Long id) {
+Employee employee = getEmployeeById(id);
+repository.delete(employee);
 }
 
 @Override
 public Employee deactivateEmployee(Long id) {
-Employee employee = getById(id);
+Employee employee = getEmployeeById(id);
 employee.setActive(false);
-return employeeRepository.save(employee);
+return repository.save(employee);
 }
 }
