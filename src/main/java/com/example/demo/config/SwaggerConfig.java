@@ -8,12 +8,11 @@ import org.springframework.context.annotation.Configuration;
 @Configuration
 public class SwaggerConfig {
 
-@Bean
-public OpenAPI apiInfo() {
-return new OpenAPI()
-.info(new Info()
-.title("Employee Skills Matrix API")
-.description("Employee Skills Matrix Search System")
-.version("1.0"));
-}
+    @Bean
+    public OpenAPI openAPI() {
+        return new OpenAPI()
+                .info(new Info()
+                        .title("Employee Skills Matrix Search API")
+                        .version("1.0"));
+    }
 }
