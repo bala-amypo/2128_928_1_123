@@ -1,22 +1,39 @@
 package com.example.demo.security;
 
-import java.util.UUID;
+import io.jsonwebtoken.Claims;
+import io.jsonwebtoken.Jwts;
+import io.jsonwebtoken.SignatureAlgorithm;
+
+import java.util.Date;
 
 public class JwtTokenProvider {
 
+    private static final String SECRET_KEY = "test-secret-key";
+    private static final long EXPIRATION_TIME = 60 * 60 * 1000; // 1 hour
+
     public String generateToken(String username) {
-        // simple deterministic token for testing
-        return username + "-" + UUID.randomUUID();
+        return Jwts.builder()
+                .setSubject(username)
+                .setIssuedAt(new Date())
+                .setExpiration(new Date(System.currentTimeMillis() + EXPIRATION_TIME))
+                .signWith(SignatureAlgorithm.HS256, SECRET_KEY)
+                .compact();
     }
 
     public String getUsernameFromToken(String token) {
-        if (token == null || !token.contains("-")) {
-            return null;
-        }
-        return token.split("-")[0];
+        Claims claims = Jwts.parser()
+                .setSigningKey(SECRET_KEY)
+                .parseClaimsJws(token)
+                .getBody();
+        return claims.getSubject();
     }
 
     public boolean validateToken(String token) {
-        return token != null && token.contains("-");
+        try {
+            Jwts.parser().setSigningKey(SECRET_KEY).parseClaimsJws(token);
+            return true;
+        } catch (Exception e) {
+            return false;
+        }
     }
 }
