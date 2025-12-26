@@ -3,7 +3,10 @@ package com.example.demo.model;
 import jakarta.persistence.*;
 
 @Entity
-@Table(name = "employee_skills")
+@Table(name = "employee_skills",
+uniqueConstraints = {
+@UniqueConstraint(columnNames = {"employee_id", "skill_id"})
+})
 public class EmployeeSkill {
 
 @Id
@@ -19,9 +22,15 @@ private Employee employee;
 private Skill skill;
 
 @Column(nullable = false)
-private Boolean active = true;
+private Integer proficiencyLevel;
 
-/* getters & setters */
+public EmployeeSkill() {}
+
+public EmployeeSkill(Employee employee, Skill skill, Integer proficiencyLevel) {
+this.employee = employee;
+this.skill = skill;
+this.proficiencyLevel = proficiencyLevel;
+}
 
 public Long getId() {
 return id;
@@ -47,11 +56,11 @@ public void setSkill(Skill skill) {
 this.skill = skill;
 }
 
-public Boolean getActive() {
-return active;
+public Integer getProficiencyLevel() {
+return proficiencyLevel;
 }
 
-public void setActive(Boolean active) {
-this.active = active;
+public void setProficiencyLevel(Integer proficiencyLevel) {
+this.proficiencyLevel = proficiencyLevel;
 }
 }

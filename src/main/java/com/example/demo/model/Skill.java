@@ -13,10 +13,20 @@ private Long id;
 @Column(nullable = false)
 private String name;
 
+@ManyToOne
+@JoinColumn(name = "category_id")
+private SkillCategory category;
+
 @Column(nullable = false)
 private Boolean active = true;
 
-/* getters & setters */
+public Skill() {}
+
+public Skill(String name, SkillCategory category) {
+this.name = name;
+this.category = category;
+this.active = true;
+}
 
 public Long getId() {
 return id;
@@ -32,6 +42,14 @@ return name;
 
 public void setName(String name) {
 this.name = name;
+}
+
+public SkillCategory getCategory() {
+return category;
+}
+
+public void setCategory(SkillCategory category) {
+this.category = category;
 }
 
 public Boolean getActive() {

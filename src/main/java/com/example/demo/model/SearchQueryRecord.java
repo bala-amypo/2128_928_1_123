@@ -12,16 +12,17 @@ public class SearchQueryRecord {
 private Long id;
 
 @Column(nullable = false)
-private String queryText;
+private String query;
 
 @Column(nullable = false)
-private LocalDateTime searchedAt;
+private LocalDateTime timestamp;
 
-public SearchQueryRecord() {
-this.searchedAt = LocalDateTime.now();
+public SearchQueryRecord() {}
+
+public SearchQueryRecord(String query) {
+this.query = query;
+this.timestamp = LocalDateTime.now();
 }
-
-/* getters & setters */
 
 public Long getId() {
 return id;
@@ -31,19 +32,19 @@ public void setId(Long id) {
 this.id = id;
 }
 
-public String getQueryText() {
-return queryText;
+public String getQuery() {
+return query;
 }
 
-public void setQueryText(String queryText) {
-this.queryText = queryText;
+public void setQuery(String query) {
+this.query = query;
 }
 
-public LocalDateTime getSearchedAt() {
-return searchedAt;
+public LocalDateTime getTimestamp() {
+return timestamp;
 }
 
-public void setSearchedAt(LocalDateTime searchedAt) {
-this.searchedAt = searchedAt;
+public void setTimestamp(LocalDateTime timestamp) {
+this.timestamp = timestamp;
 }
 }
