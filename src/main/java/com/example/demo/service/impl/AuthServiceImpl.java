@@ -1,54 +1,72 @@
-package com.example.demo.security;
+package com.example.demo.service.impl;
 
-import io.jsonwebtoken.*;
-import io.jsonwebtoken.security.Keys;
-import org.springframework.stereotype.Component;
+import com.example.demo.dto.AuthLoginRequest;
+import com.example.demo.dto.AuthRegisterRequest;
+import com.example.demo.dto.AuthResponse;
+import com.example.demo.model.Employee;
+import com.example.demo.repository.EmployeeRepository;
+import com.example.demo.security.JwtTokenProvider;
+import com.example.demo.service.AuthService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
-import java.security.Key;
-import java.util.Date;
+@Service
+public class AuthServiceImpl implements AuthService {
 
-@Component   // ✅ THIS IS THE FIX
-public class JwtTokenProvider {
+    private final EmployeeRepository employeeRepository;
+    private final JwtTokenProvider jwtTokenProvider;
 
-    private final Key key = Keys.secretKeyFor(SignatureAlgorithm.HS256);
-
-    public String generateToken(Long userId, String email, String role) {
-        return Jwts.builder()
-                .claim("userId", userId)
-                .claim("email", email)
-                .claim("role", role)
-                .setIssuedAt(new Date())
-                .setExpiration(new Date(System.currentTimeMillis() + 86400000))
-                .signWith(key)
-                .compact();
+    @Autowired
+    public AuthServiceImpl(EmployeeRepository employeeRepository,
+                           JwtTokenProvider jwtTokenProvider) {
+        this.employeeRepository = employeeRepository;
+        this.jwtTokenProvider = jwtTokenProvider;
     }
 
-    public boolean validateToken(String token) {
-        try {
-            getClaims(token);
-            return true;
-        } catch (Exception e) {
-            return false;
-        }
+    // ================= REGISTER =================
+    @Override
+    public AuthResponse register(AuthRegisterRequest request) {
+
+        Employee employee = new Employee();
+        employee.setFullName(request.getFullName());
+        employee.setEmail(request.getEmail());
+        employee.setActive(true); // default required by tests
+
+        Employee saved = employeeRepository.save(employee);
+
+        String token = jwtTokenProvider.generateToken(
+                saved.getId(),
+                saved.getEmail(),
+                "USER"
+        );
+
+        return new AuthResponse(
+                token,
+                saved.getId(),
+                saved.getEmail(),
+                "USER"
+        );
     }
 
-    public Claims getClaims(String token) {
-        return Jwts.parserBuilder()
-                .setSigningKey(key)
-                .build()
-                .parseClaimsJws(token)
-                .getBody();
-    }
+    // ================= LOGIN =================
+    @Override
+    public AuthResponse login(AuthLoginRequest request) {
 
-    public String getEmailFromToken(String token) {
-        return getClaims(token).get("email", String.class);
-    }
+        Employee employee = employeeRepository
+                .findByEmail(request.getEmail())
+                .orElseThrow(() -> new RuntimeException("Employee not found"));
 
-    public Long getUserIdFromToken(String token) {
-        return getClaims(token).get("userId", Long.class);
-    }
+        String token = jwtTokenProvider.generateToken(
+                employee.getId(),
+                employee.getEmail(),
+                "USER"
+        );
 
-    public String getRoleFromToken(String token) {
-        return getClaims(token).get("role", String.class);
+        return new AuthResponse(
+                token,
+                employee.getId(),
+                employee.getEmail(),
+                "USER"
+        );
     }
 }
