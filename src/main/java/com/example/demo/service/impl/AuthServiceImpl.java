@@ -1,65 +1,54 @@
-package com.example.demo.service.impl;
+package com.example.demo.security;
 
-import com.example.demo.dto.AuthLoginRequest;
-import com.example.demo.dto.AuthRegisterRequest;
-import com.example.demo.dto.AuthResponse;
-import com.example.demo.model.Employee;
-import com.example.demo.repository.EmployeeRepository;
-import com.example.demo.security.JwtTokenProvider;
-import com.example.demo.service.AuthService;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
+import io.jsonwebtoken.*;
+import io.jsonwebtoken.security.Keys;
+import org.springframework.stereotype.Component;
 
-@Service
-public class AuthServiceImpl implements AuthService {
+import java.security.Key;
+import java.util.Date;
 
-    @Autowired
-    private EmployeeRepository employeeRepository;
+@Component   // ✅ THIS IS THE FIX
+public class JwtTokenProvider {
 
-    @Autowired
-    private JwtTokenProvider jwtTokenProvider;
+    private final Key key = Keys.secretKeyFor(SignatureAlgorithm.HS256);
 
-    @Override
-    public AuthResponse register(AuthRegisterRequest request) {
-
-        Employee employee = new Employee();
-        employee.setFullName(request.getFullName());
-        employee.setEmail(request.getEmail());
-        employee.setActive(true);
-
-        Employee saved = employeeRepository.save(employee);
-
-        String token = jwtTokenProvider.generateToken(
-                saved.getId(),
-                saved.getEmail(),
-                "USER"
-        );
-
-        return new AuthResponse(
-                token,
-                saved.getId(),
-                saved.getEmail(),
-                "USER"
-        );
+    public String generateToken(Long userId, String email, String role) {
+        return Jwts.builder()
+                .claim("userId", userId)
+                .claim("email", email)
+                .claim("role", role)
+                .setIssuedAt(new Date())
+                .setExpiration(new Date(System.currentTimeMillis() + 86400000))
+                .signWith(key)
+                .compact();
     }
 
-    @Override
-    public AuthResponse login(AuthLoginRequest request) {
+    public boolean validateToken(String token) {
+        try {
+            getClaims(token);
+            return true;
+        } catch (Exception e) {
+            return false;
+        }
+    }
 
-        Employee employee = employeeRepository.findByEmail(request.getEmail())
-                .orElseThrow(() -> new RuntimeException("Invalid credentials"));
+    public Claims getClaims(String token) {
+        return Jwts.parserBuilder()
+                .setSigningKey(key)
+                .build()
+                .parseClaimsJws(token)
+                .getBody();
+    }
 
-        String token = jwtTokenProvider.generateToken(
-                employee.getId(),
-                employee.getEmail(),
-                "USER"
-        );
+    public String getEmailFromToken(String token) {
+        return getClaims(token).get("email", String.class);
+    }
 
-        return new AuthResponse(
-                token,
-                employee.getId(),
-                employee.getEmail(),
-                "USER"
-        );
+    public Long getUserIdFromToken(String token) {
+        return getClaims(token).get("userId", Long.class);
+    }
+
+    public String getRoleFromToken(String token) {
+        return getClaims(token).get("role", String.class);
     }
 }
