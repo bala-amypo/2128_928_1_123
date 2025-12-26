@@ -14,15 +14,18 @@ List<EmployeeSkill> findByEmployeeId(Long employeeId);
 
 List<EmployeeSkill> findBySkillId(Long skillId);
 
+/*
+ * Find employees who have ALL given skill names
+ */
 @Query("""
-SELECT es.employee
+SELECT es.employee.id
 FROM EmployeeSkill es
-WHERE es.skill.name IN :skillNames
-GROUP BY es.employee
-HAVING COUNT(DISTINCT es.skill.name) = :count
+WHERE es.skill.name IN :skills
+GROUP BY es.employee.id
+HAVING COUNT(DISTINCT es.skill.name) = :skillCount
 """)
 List<Object> findEmployeesByAllSkillNames(
-@Param("skillNames") List<String> skillNames,
-@Param("count") long count
+@Param("skills") List<String> skills,
+@Param("skillCount") long skillCount
 );
 }

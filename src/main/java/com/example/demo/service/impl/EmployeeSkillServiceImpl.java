@@ -35,6 +35,7 @@ return repository.findBySkillId(skillId);
 
 @Override
 public List<Object> searchEmployeesBySkills(List<String> skillNames) {
-return repository.findEmployeesByAllSkillNames(skillNames);
+return repository.findEmployeesByAllSkillNames(skillNames, skillNames.size());
+
 }
 }
