@@ -1,6 +1,6 @@
 package com.example.demo.service.impl;
 
-import com.example.demo.entity.Employee;
+import com.example.demo.model.Employee;
 import com.example.demo.exception.ResourceNotFoundException;
 import com.example.demo.repository.EmployeeRepository;
 import com.example.demo.service.EmployeeService;

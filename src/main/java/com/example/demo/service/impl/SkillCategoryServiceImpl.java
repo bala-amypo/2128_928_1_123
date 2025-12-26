@@ -1,6 +1,6 @@
 package com.example.demo.service.impl;
 
-import com.example.demo.entity.SkillCategory;
+import com.example.demo.model.SkillCategory;
 import com.example.demo.exception.ResourceNotFoundException;
 import com.example.demo.repository.SkillCategoryRepository;
 import com.example.demo.service.SkillCategoryService;
