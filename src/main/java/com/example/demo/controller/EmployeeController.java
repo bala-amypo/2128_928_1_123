@@ -7,26 +7,27 @@ import org.springframework.web.bind.annotation.*;
 public class EmployeeController {
 
     @PostMapping
-    public Object create() {
+    public Object createEmployee(@RequestBody Object body) {
         return null;
     }
 
     @PutMapping("/{id}")
-    public Object update(@PathVariable Long id) {
+    public Object updateEmployee(@PathVariable Long id,
+                                 @RequestBody Object body) {
         return null;
     }
 
     @GetMapping("/{id}")
-    public Object getById(@PathVariable Long id) {
+    public Object getEmployee(@PathVariable Long id) {
         return null;
     }
 
     @GetMapping
-    public Object getAll() {
+    public Object getAllEmployees() {
         return null;
     }
 
     @PutMapping("/{id}/deactivate")
-    public void deactivate(@PathVariable Long id) {
+    public void deactivateEmployee(@PathVariable Long id) {
     }
 }

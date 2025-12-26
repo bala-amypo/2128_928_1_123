@@ -7,26 +7,27 @@ import org.springframework.web.bind.annotation.*;
 public class EmployeeSkillController {
 
     @PostMapping
-    public Object create() {
+    public Object createMapping(@RequestBody Object body) {
         return null;
     }
 
     @PutMapping("/{id}")
-    public Object update(@PathVariable Long id) {
+    public Object updateMapping(@PathVariable Long id,
+                                @RequestBody Object body) {
         return null;
     }
 
     @GetMapping("/employee/{employeeId}")
-    public Object getByEmployee(@PathVariable Long employeeId) {
+    public Object getSkillsByEmployee(@PathVariable Long employeeId) {
         return null;
     }
 
     @GetMapping("/skill/{skillId}")
-    public Object getBySkill(@PathVariable Long skillId) {
+    public Object getEmployeesBySkill(@PathVariable Long skillId) {
         return null;
     }
 
     @PutMapping("/{id}/deactivate")
-    public void deactivate(@PathVariable Long id) {
+    public void deactivateMapping(@PathVariable Long id) {
     }
 }
