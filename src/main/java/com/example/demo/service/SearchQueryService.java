@@ -6,7 +6,7 @@ import java.util.List;
 
 public interface SearchQueryService {
 
-    SearchQueryRecord saveQuery(SearchQueryRecord record);
+    SearchQueryRecord saveQuery(String query);
 
     List<SearchQueryRecord> getAllQueries();
 }

@@ -5,6 +5,7 @@ import com.example.demo.repository.SearchQueryRecordRepository;
 import com.example.demo.service.SearchQueryService;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Service
@@ -17,7 +18,10 @@ public class SearchQueryServiceImpl implements SearchQueryService {
     }
 
     @Override
-    public SearchQueryRecord saveQuery(SearchQueryRecord record) {
+    public SearchQueryRecord saveQuery(String query) {
+        SearchQueryRecord record = new SearchQueryRecord();
+        record.setQuery(query);
+        record.setTimestamp(LocalDateTime.now());
         return repository.save(record);
     }
 

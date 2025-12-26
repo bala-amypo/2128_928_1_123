@@ -1,7 +1,7 @@
 package com.example.demo.service.impl;
 
-import com.example.demo.model.SkillCategory;
 import com.example.demo.exception.ResourceNotFoundException;
+import com.example.demo.model.SkillCategory;
 import com.example.demo.repository.SkillCategoryRepository;
 import com.example.demo.service.SkillCategoryService;
 import org.springframework.stereotype.Service;
@@ -25,7 +25,7 @@ public class SkillCategoryServiceImpl implements SkillCategoryService {
     @Override
     public SkillCategory getCategoryById(Long id) {
         return repository.findById(id)
-                .orElseThrow(() -> new ResourceNotFoundException("SkillCategory not found with id " + id));
+                .orElseThrow(() -> new ResourceNotFoundException("Category not found"));
     }
 
     @Override
@@ -36,13 +36,12 @@ public class SkillCategoryServiceImpl implements SkillCategoryService {
     @Override
     public SkillCategory updateCategory(Long id, SkillCategory category) {
         SkillCategory existing = getCategoryById(id);
-        category.setId(existing.getId());
-        return repository.save(category);
+        existing.setName(category.getName());
+        return repository.save(existing);
     }
 
     @Override
     public void deleteCategory(Long id) {
-        SkillCategory existing = getCategoryById(id);
-        repository.delete(existing);
+        repository.delete(getCategoryById(id));
     }
 }
