@@ -8,7 +8,6 @@ import com.example.demo.repository.EmployeeRepository;
 import com.example.demo.security.JwtTokenProvider;
 import com.example.demo.service.AuthService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -20,8 +19,6 @@ public class AuthServiceImpl implements AuthService {
     @Autowired
     private JwtTokenProvider jwtTokenProvider;
 
-    private final BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
-
     @Override
     public AuthResponse register(AuthRegisterRequest request) {
 
@@ -30,12 +27,8 @@ public class AuthServiceImpl implements AuthService {
         employee.setEmail(request.getEmail());
         employee.setActive(true);
 
-        // password is stored as encoded email (as expected by tests)
-        employee.setPassword(passwordEncoder.encode(request.getEmail()));
-
         Employee saved = employeeRepository.save(employee);
 
-        // ✅ CORRECT ORDER: Long, String, String
         String token = jwtTokenProvider.generateToken(
                 saved.getId(),
                 saved.getEmail(),
@@ -56,11 +49,6 @@ public class AuthServiceImpl implements AuthService {
         Employee employee = employeeRepository.findByEmail(request.getEmail())
                 .orElseThrow(() -> new RuntimeException("Invalid credentials"));
 
-        if (!passwordEncoder.matches(request.getEmail(), employee.getPassword())) {
-            throw new RuntimeException("Invalid credentials");
-        }
-
-        // ✅ CORRECT ORDER AGAIN
         String token = jwtTokenProvider.generateToken(
                 employee.getId(),
                 employee.getEmail(),
