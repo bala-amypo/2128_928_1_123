@@ -17,15 +17,21 @@ public class SearchQueryRecord {
     @Column(nullable = false)
     private String skillsRequested;
 
+    // 🔴 MUST default to 0 for tests
     private Integer resultsCount;
 
     @Column(updatable = false)
     private LocalDateTime searchedAt;
 
-    // 🔴 FIX: protected → public (tests call this directly)
+    // 🔴 TESTS CALL THIS DIRECTLY
     @PrePersist
     public void onCreate() {
         this.searchedAt = LocalDateTime.now();
+
+        // 🔴 REQUIRED BY testSearchQueryRecordPrePersistSetsTimestamp
+        if (this.resultsCount == null) {
+            this.resultsCount = 0;
+        }
     }
 
     // getters and setters
