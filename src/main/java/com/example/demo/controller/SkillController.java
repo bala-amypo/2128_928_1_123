@@ -1,44 +1,33 @@
 package com.example.demo.controller;
 
-import com.example.demo.model.Skill;
-import com.example.demo.service.SkillService;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.List;
 
 @RestController
 @RequestMapping("/api/skills")
 public class SkillController {
 
-    private final SkillService skillService;
-
-    public SkillController(SkillService skillService) {
-        this.skillService = skillService;
-    }
-
     @PostMapping
-    public Skill createSkill(@RequestBody Skill skill) {
-        return skillService.save(skill);
+    public Object createSkill(@RequestBody Object body) {
+        return null;
     }
 
     @PutMapping("/{id}")
-    public Skill updateSkill(@PathVariable Long id,
-                             @RequestBody Skill skill) {
-        return skillService.update(id, skill);
+    public Object updateSkill(@PathVariable Long id,
+                              @RequestBody Object body) {
+        return null;
     }
 
     @GetMapping("/{id}")
-    public Skill getSkill(@PathVariable Long id) {
-        return skillService.findById(id);
+    public Object getSkill(@PathVariable Long id) {
+        return null;
     }
 
     @GetMapping
-    public List<Skill> getAllSkills() {
-        return skillService.findAll();
+    public Object getAllSkills() {
+        return null;
     }
 
     @PutMapping("/{id}/deactivate")
     public void deactivateSkill(@PathVariable Long id) {
-        skillService.deactivate(id);
     }
 }
