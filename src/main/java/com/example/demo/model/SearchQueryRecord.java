@@ -11,28 +11,61 @@ public class SearchQueryRecord {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @Column(nullable = false)
     private Long searcherId;
+
+    @Column(nullable = false)
     private String skillsRequested;
-    private Integer resultsCount = 0;
+
+    private Integer resultsCount;
+
+    @Column(updatable = false)
     private LocalDateTime searchedAt;
 
     @PrePersist
-    public void onCreate() {
+    protected void onCreate() {
         this.searchedAt = LocalDateTime.now();
-        this.resultsCount = 0;
     }
 
-    public Long getId() { return id; }
-    public void setId(Long id) { this.id = id; }
+    // getters and setters
 
-    public Long getSearcherId() { return searcherId; }
-    public void setSearcherId(Long searcherId) { this.searcherId = searcherId; }
+    public Long getId() {
+        return id;
+    }
+    
+    public void setId(Long id) {
+        this.id = id;
+    }
 
-    public String getSkillsRequested() { return skillsRequested; }
-    public void setSkillsRequested(String skillsRequested) { this.skillsRequested = skillsRequested; }
+    public Long getSearcherId() {
+        return searcherId;
+    }
+    
+    public void setSearcherId(Long searcherId) {
+        this.searcherId = searcherId;
+    }
 
-    public Integer getResultsCount() { return resultsCount; }
-    public void setResultsCount(Integer resultsCount) { this.resultsCount = resultsCount; }
+    public String getSkillsRequested() {
+        return skillsRequested;
+    }
+    
+    public void setSkillsRequested(String skillsRequested) {
+        this.skillsRequested = skillsRequested;
+    }
 
-    public LocalDateTime getSearchedAt() { return searchedAt; }
+    public Integer getResultsCount() {
+        return resultsCount;
+    }
+    
+    public void setResultsCount(Integer resultsCount) {
+        this.resultsCount = resultsCount;
+    }
+
+    public LocalDateTime getSearchedAt() {
+        return searchedAt;
+    }
+    
+    public void setSearchedAt(LocalDateTime searchedAt) {
+        this.searchedAt = searchedAt;
+    }
 }
