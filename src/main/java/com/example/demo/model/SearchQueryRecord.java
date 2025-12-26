@@ -3,30 +3,24 @@ package com.example.demo.model;
 import jakarta.persistence.*;
 import java.time.LocalDateTime;
 
-@model
-@Table(name = "search_queries")
+@Entity
+@Table(name = "search_query_record")
 public class SearchQueryRecord {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    private String skillsRequested;
-
-    private Integer resultsCount;
+    private String query;
 
     private LocalDateTime searchedAt;
 
-    @ManyToOne
-    @JoinColumn(name = "searcher_id")
-    private User searcher;
+    public SearchQueryRecord() {}
 
-    @PrePersist
-    public void onSearch() {
+    public SearchQueryRecord(String query) {
+        this.query = query;
         this.searchedAt = LocalDateTime.now();
     }
-
-    // -------- Getters & Setters --------
 
     public Long getId() {
         return id;
@@ -36,31 +30,19 @@ public class SearchQueryRecord {
         this.id = id;
     }
 
-    public String getSkillsRequested() {
-        return skillsRequested;
+    public String getQuery() {
+        return query;
     }
 
-    public void setSkillsRequested(String skillsRequested) {
-        this.skillsRequested = skillsRequested;
-    }
-
-    public Integer getResultsCount() {
-        return resultsCount;
-    }
-
-    public void setResultsCount(Integer resultsCount) {
-        this.resultsCount = resultsCount;
+    public void setQuery(String query) {
+        this.query = query;
     }
 
     public LocalDateTime getSearchedAt() {
         return searchedAt;
     }
 
-    public User getSearcher() {
-        return searcher;
-    }
-
-    public void setSearcher(User searcher) {
-        this.searcher = searcher;
+    public void setSearchedAt(LocalDateTime searchedAt) {
+        this.searchedAt = searchedAt;
     }
 }

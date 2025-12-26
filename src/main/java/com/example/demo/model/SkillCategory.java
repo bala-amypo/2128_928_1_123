@@ -1,23 +1,22 @@
-package com.example.demo.entity;
+package com.example.demo.model;
 
 import jakarta.persistence.*;
 
 @Entity
-@Table(name = "skill_categories")
+@Table(name = "skill_category")
 public class SkillCategory {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(unique = true)
-    private String categoryName;
+    private String name;
 
-    private String description;
+    public SkillCategory() {}
 
-    private boolean active = true;
-
-    // -------- Getters & Setters --------
+    public SkillCategory(String name) {
+        this.name = name;
+    }
 
     public Long getId() {
         return id;
@@ -27,27 +26,11 @@ public class SkillCategory {
         this.id = id;
     }
 
-    public String getCategoryName() {
-        return categoryName;
+    public String getName() {
+        return name;
     }
 
-    public void setCategoryName(String categoryName) {
-        this.categoryName = categoryName;
-    }
-
-    public String getDescription() {
-        return description;
-    }
-
-    public void setDescription(String description) {
-        this.description = description;
-    }
-
-    public boolean isActive() {
-        return active;
-    }
-
-    public void setActive(boolean active) {
-        this.active = active;
+    public void setName(String name) {
+        this.name = name;
     }
 }

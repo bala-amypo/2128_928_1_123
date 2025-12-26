@@ -2,29 +2,33 @@ package com.example.demo.model;
 
 import jakarta.persistence.*;
 
-@model
-@Table(name = "employee_skills")
+@Entity
+@Table(name = "employee_skill")
 public class EmployeeSkill {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @ManyToOne(optional = false)
+    @ManyToOne
     @JoinColumn(name = "employee_id")
     private Employee employee;
 
-    @ManyToOne(optional = false)
+    @ManyToOne
     @JoinColumn(name = "skill_id")
     private Skill skill;
 
-    private String proficiencyLevel;
-
-    private Integer yearsOfExperience;
-
+    private int proficiency; // expected by tests
     private boolean active = true;
 
-    // -------- Getters & Setters --------
+    public EmployeeSkill() {}
+
+    public EmployeeSkill(Employee employee, Skill skill, int proficiency) {
+        this.employee = employee;
+        this.skill = skill;
+        this.proficiency = proficiency;
+        this.active = true;
+    }
 
     public Long getId() {
         return id;
@@ -50,20 +54,12 @@ public class EmployeeSkill {
         this.skill = skill;
     }
 
-    public String getProficiencyLevel() {
-        return proficiencyLevel;
+    public int getProficiency() {
+        return proficiency;
     }
 
-    public void setProficiencyLevel(String proficiencyLevel) {
-        this.proficiencyLevel = proficiencyLevel;
-    }
-
-    public Integer getYearsOfExperience() {
-        return yearsOfExperience;
-    }
-
-    public void setYearsOfExperience(Integer yearsOfExperience) {
-        this.yearsOfExperience = yearsOfExperience;
+    public void setProficiency(int proficiency) {
+        this.proficiency = proficiency;
     }
 
     public boolean isActive() {
