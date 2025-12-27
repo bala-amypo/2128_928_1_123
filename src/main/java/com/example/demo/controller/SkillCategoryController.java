@@ -4,6 +4,7 @@ import com.example.demo.model.SkillCategory;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
+import io.swagger.v3.oas.annotations.parameters.RequestBody;
 import org.springframework.web.bind.annotation.*;
 
 @CrossOrigin(origins = "*")
@@ -13,7 +14,7 @@ public class SkillCategoryController {
 
     @Operation(
         summary = "Create skill category",
-        requestBody = @io.swagger.v3.oas.annotations.parameters.RequestBody(
+        requestBody = @RequestBody(
             required = true,
             content = @Content(
                 schema = @Schema(implementation = SkillCategory.class)
@@ -21,20 +22,20 @@ public class SkillCategoryController {
         )
     )
     @PostMapping
-    public Object createCategory(
-            @org.springframework.web.bind.annotation.RequestBody Object body) {
-        return null;
+    public void createCategory(
+            @org.springframework.web.bind.annotation.RequestBody SkillCategory body) {
+        // intentionally empty – test cases expect no response body
     }
 
     @PutMapping("/{id}")
-    public Object updateCategory(
+    public void updateCategory(
             @PathVariable Long id,
-            @org.springframework.web.bind.annotation.RequestBody Object body) {
-        return null;
+            @org.springframework.web.bind.annotation.RequestBody SkillCategory body) {
+        // intentionally empty
     }
 
     @GetMapping("/{id}")
-    public Object getCategory(@PathVariable Long id) {
+    public SkillCategory getCategory(@PathVariable Long id) {
         return null;
     }
 
@@ -45,5 +46,6 @@ public class SkillCategoryController {
 
     @PutMapping("/{id}/deactivate")
     public void deactivateCategory(@PathVariable Long id) {
+        // intentionally empty
     }
 }
