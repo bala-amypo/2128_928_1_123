@@ -1,34 +1,17 @@
 package com.example.demo.controller;
 
-import io.swagger.v3.oas.annotations.Operation;
-import io.swagger.v3.oas.annotations.media.Content;
-import io.swagger.v3.oas.annotations.media.Schema;
-import io.swagger.v3.oas.annotations.parameters.RequestBody;
 import org.springframework.web.bind.annotation.*;
+import java.util.List;   // ✅ REQUIRED IMPORT
 
 @RestController
 @RequestMapping("/api/search")
 public class SearchQueryController {
 
-    @Operation(
-        summary = "Search employees by skill IDs",
-        description = "Provide a list of skill IDs to search matching employees",
-        requestBody = @RequestBody(
-            required = true,
-            content = @Content(
-                schema = @Schema(
-                    type = "array",
-                    example = "[1, 2, 3]"
-                )
-            )
-        )
-    )
-   @PostMapping("/employees")
+    @PostMapping("/employees")
     public Object searchEmployees(
-        @org.springframework.web.bind.annotation.RequestBody List<Long> skillIds) {
-    return skillIds;
-}
-
+            @org.springframework.web.bind.annotation.RequestBody List<Long> skillIds) {
+        return skillIds;
+    }
 
     @GetMapping("/{id}")
     public Object getQuery(@PathVariable Long id) {
