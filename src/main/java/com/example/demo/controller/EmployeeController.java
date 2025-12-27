@@ -1,35 +1,21 @@
 package com.example.demo.controller;
 
-import com.example.demo.model.Employee;
-import io.swagger.v3.oas.annotations.Operation;
-import io.swagger.v3.oas.annotations.media.Content;
-import io.swagger.v3.oas.annotations.media.Schema;
-import io.swagger.v3.oas.annotations.parameters.RequestBody;
 import org.springframework.web.bind.annotation.*;
 
-@CrossOrigin(origins = "*")
 @RestController
-@RequestMapping("/employees")
+@RequestMapping("/api/employees")
+@CrossOrigin
 public class EmployeeController {
 
-    @Operation(
-        summary = "Create employee",
-        requestBody = @RequestBody(
-            required = true,
-            content = @Content(schema = @Schema(implementation = Employee.class))
-        )
-    )
     @PostMapping
-    public Object createEmployee(
-            @org.springframework.web.bind.annotation.RequestBody Employee employee) {
-        return employee;
+    public Object createEmployee(@RequestBody Object body) {
+        return body;
     }
 
     @PutMapping("/{id}")
-    public Object updateEmployee(
-            @PathVariable Long id,
-            @org.springframework.web.bind.annotation.RequestBody Employee employee) {
-        return employee;
+    public Object updateEmployee(@PathVariable Long id,
+                                 @RequestBody Object body) {
+        return body;
     }
 
     @GetMapping("/{id}")

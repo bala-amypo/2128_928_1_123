@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.*;
 
 @CrossOrigin(origins = "*")
 @RestController
-@RequestMapping("/api/employee-skills")
+@RequestMapping("/employee-skills")
 public class EmployeeSkillController {
 
     @Operation(

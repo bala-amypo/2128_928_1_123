@@ -1,16 +1,15 @@
 package com.example.demo.controller;
 
 import org.springframework.web.bind.annotation.*;
-import java.util.List;   // ✅ REQUIRED IMPORT
+import java.util.List;
 
-@CrossOrigin(origins = "*")
 @RestController
 @RequestMapping("/api/search")
+@CrossOrigin
 public class SearchQueryController {
 
     @PostMapping("/employees")
-    public Object searchEmployees(
-            @org.springframework.web.bind.annotation.RequestBody List<Long> skillIds) {
+    public Object searchEmployees(@RequestBody List<Long> skillIds) {
         return skillIds;
     }
 
