@@ -23,11 +23,12 @@ public class SearchQueryController {
             )
         )
     )
-    @PostMapping("/employees")
+   @PostMapping("/employees")
     public Object searchEmployees(
-            @org.springframework.web.bind.annotation.RequestBody Object body) {
-        return null;
-    }
+        @org.springframework.web.bind.annotation.RequestBody List<Long> skillIds) {
+    return skillIds;
+}
+
 
     @GetMapping("/{id}")
     public Object getQuery(@PathVariable Long id) {
