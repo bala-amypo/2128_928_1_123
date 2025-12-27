@@ -3,6 +3,7 @@ package com.example.demo.controller;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
+import io.swagger.v3.oas.annotations.parameters.RequestBody;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -11,11 +12,13 @@ public class SearchQueryController {
 
     @Operation(
         summary = "Search employees by skill IDs",
-        requestBody = @io.swagger.v3.oas.annotations.parameters.RequestBody(
+        description = "Provide a list of skill IDs to search matching employees",
+        requestBody = @RequestBody(
             required = true,
             content = @Content(
                 schema = @Schema(
                     type = "array",
+                    example = "[1, 2, 3]",
                     implementation = Long.class
                 )
             )
