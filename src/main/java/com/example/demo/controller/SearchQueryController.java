@@ -1,6 +1,7 @@
 package com.example.demo.controller;
 
 import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.media.ArraySchema;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.parameters.RequestBody;
@@ -16,10 +17,13 @@ public class SearchQueryController {
         requestBody = @RequestBody(
             required = true,
             content = @Content(
-                schema = @Schema(
-                    type = "array",
-                    example = "[1, 2, 3]",
-                    implementation = Long.class
+                array = @ArraySchema(
+                    schema = @Schema(
+                        type = "integer",
+                        format = "int64",
+                        example = "1"
+                    ),
+                    example = "[1, 2, 3]"
                 )
             )
         )
