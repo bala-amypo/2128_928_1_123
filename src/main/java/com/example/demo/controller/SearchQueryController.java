@@ -3,6 +3,7 @@ package com.example.demo.controller;
 import org.springframework.web.bind.annotation.*;
 import java.util.List;   // ✅ REQUIRED IMPORT
 
+@CrossOrigin(origins = "*")
 @RestController
 @RequestMapping("/api/search")
 public class SearchQueryController {
